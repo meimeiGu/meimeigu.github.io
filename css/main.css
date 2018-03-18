@@ -1069,14 +1069,10 @@ pre .javascript .function {
   bottom: 19px;
 }
 .header {
-  background: transparent;
+  background: url("../../../../images/the-seagulls-3144601_1920.jpg");
 }
 .header-inner {
   position: relative;
-}
-.headband {
-  height: 3px;
-  background: #222;
 }
 .site-meta {
   margin: 0;
@@ -1807,7 +1803,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff;
+  background: #d4dd7d;
 }
 .links-of-blogroll {
   font-size: 13px;
