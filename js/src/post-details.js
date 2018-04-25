@@ -100,8 +100,17 @@ $(document).ready(function () {
       currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
         target
           .velocity('stop')
-          .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-          .addClass(activePanelClassName);
+          .velocity('transition.slideDownIn', {
+            duration: TAB_ANIMATE_DURATION,
+            begin: function () {
+              item.siblings().removeClass(activeTabClassName);
+              item.addClass(activeTabClassName);
+            },
+            complete: function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            }
+          });
       }) :
       currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
         currentTarget.hide();
@@ -111,14 +120,12 @@ $(document).ready(function () {
           .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
             currentTarget.removeClass(activePanelClassName);
             target.addClass(activePanelClassName);
+            item.siblings().removeClass(activeTabClassName);
+            item.addClass(activeTabClassName);
           });
       });
-
-    item.siblings().removeClass(activeTabClassName);
-    item.addClass(activeTabClassName);
   });
 
-  // TOC item animation navigate & prevent #item selector in adress bar.
   $('.post-toc a').on('click', function (e) {
     e.preventDefault();
     var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
@@ -135,14 +142,13 @@ $(document).ready(function () {
   });
 
   // Expand sidebar on post detail page by default, when post has a toc.
-  var $tocContent = $('.post-toc-content');
-  var isSidebarCouldDisplay = CONFIG.sidebar.display === 'post' ||
-      CONFIG.sidebar.display === 'always';
-  var hasTOC = $tocContent.length > 0 && $tocContent.html().trim().length > 0;
-  if (isSidebarCouldDisplay && hasTOC) {
-    CONFIG.motion ?
-      (NexT.motion.middleWares.sidebar = function () {
-          NexT.utils.displaySidebar();
-      }) : NexT.utils.displaySidebar();
-  }
+  NexT.motion.middleWares.sidebar = function () {
+    var $tocContent = $('.post-toc-content');
+
+    if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        NexT.utils.displaySidebar();
+      }
+    }
+  };
 });
