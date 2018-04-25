@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="gulp的使用 本文将介绍gulp的基础使用和一次项目实践。  一、gulp的介绍1.gulp是一个工具，用于在开发工作流程中自动执行我们需要执行的任务，比如修改代码后重新编译，构建环境等，gulp可以一行命令搞定这些重复琐碎的工作。 二、gulp的四个参数1.gulp.src (globs[,optons]) : 在src里传入我们需要处理的文件或者文件数组，将会被转化为能被插件处理的文件流。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gulp的使用">
+<meta property="og:url" content="http://yoursite.com/2018/03/18/gulp的使用/index.html">
+<meta property="og:site_name" content="草丛小精灵">
+<meta property="og:description" content="gulp的使用 本文将介绍gulp的基础使用和一次项目实践。  一、gulp的介绍1.gulp是一个工具，用于在开发工作流程中自动执行我们需要执行的任务，比如修改代码后重新编译，构建环境等，gulp可以一行命令搞定这些重复琐碎的工作。 二、gulp的四个参数1.gulp.src (globs[,optons]) : 在src里传入我们需要处理的文件或者文件数组，将会被转化为能被插件处理的文件流。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-25T10:23:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gulp的使用">
+<meta name="twitter:description" content="gulp的使用 本文将介绍gulp的基础使用和一次项目实践。  一、gulp的介绍1.gulp是一个工具，用于在开发工作流程中自动执行我们需要执行的任务，比如修改代码后重新编译，构建环境等，gulp可以一行命令搞定这些重复琐碎的工作。 二、gulp的四个参数1.gulp.src (globs[,optons]) : 在src里传入我们需要处理的文件或者文件数组，将会被转化为能被插件处理的文件流。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'wangmm'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/18/gulp的使用/"/>
+
+
+
+
+
+  <title>gulp的使用 | 草丛小精灵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">草丛小精灵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/gulp的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="草丛小精灵">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/cat.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="草丛小精灵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gulp的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T10:58:50+08:00">
+                2018-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/18/gulp的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/18/gulp的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/18/gulp的使用/" class="leancloud_visitors" data-flag-title="gulp的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="gulp的使用"><a href="#gulp的使用" class="headerlink" title="gulp的使用"></a>gulp的使用</h3><blockquote>
+<p>本文将介绍gulp的基础使用和一次项目实践。</p>
+</blockquote>
+<h4 id="一、gulp的介绍"><a href="#一、gulp的介绍" class="headerlink" title="一、gulp的介绍"></a>一、gulp的介绍</h4><p>1.gulp是一个工具，用于在开发工作流程中自动执行我们需要执行的任务，比如修改代码后重新编译，构建环境等，gulp可以一行命令搞定这些重复琐碎的工作。</p>
+<h4 id="二、gulp的四个参数"><a href="#二、gulp的四个参数" class="headerlink" title="二、gulp的四个参数"></a>二、gulp的四个参数</h4><p>1.gulp.src (globs[,optons]) : 在src里传入我们需要处理的文件或者文件数组，将会被转化为能被插件处理的文件流。</p>
+<p>2.gulp.dest(path,[,options]):可以将pipe进来的数据写入文件，重新发送传递给它的所有数据，以便管道到多个文件夹。不存在的文件夹将被创建。（注意写此处的path是文件夹）</p>
+<p>3.gulp.task(name[,deps,fn])：定义任务，任务的名称不应该有空格，当前执行的任务如果依赖于或者需要其他任务先执行完，采用下图方式即可，mytask任务将在其他四个人任务执行完后执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'mytask'</span>, [<span class="string">'array'</span>, <span class="string">'of'</span>, <span class="string">'task'</span>, <span class="string">'names'</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Do stuff</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>​       也可以定义任务用于执行一系列的任务，例如构建开发环境，产品环境。</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'build'</span>, [<span class="string">'array'</span>, <span class="string">'of'</span>, <span class="string">'task'</span>, <span class="string">'names'</span>]);</span><br></pre></td></tr></table></figure>
+<p>4.gulp.watch(glob,[opts],tasks): 监听文件或者文件数组的改变，执行相应的任务。</p>
+<h4 id="三、项目实践"><a href="#三、项目实践" class="headerlink" title="三、项目实践"></a>三、项目实践</h4><blockquote>
+<p>项目要完成的任务是：</p>
+<p>1.将keppAcounts模块打包压缩并提供开发和产品两套环境的打包<br>2.其他模块合并相应文件到一个目录供外壳项目引入<br>3.整个项目新老框架两种打包方式（gulp、webpack）用一个命令完成构建<br>4.监听所有文件的改变</p>
+</blockquote>
+<p>1.本次项目所运用的插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> concat = <span class="built_in">require</span>(<span class="string">"gulp-concat"</span>);			<span class="comment">//文件的合并</span></span><br><span class="line"><span class="keyword">const</span> uglify = <span class="built_in">require</span>(<span class="string">"gulp-uglify"</span>);			<span class="comment">//js文件压缩</span></span><br><span class="line"><span class="keyword">const</span> cleanCSS = <span class="built_in">require</span>(<span class="string">"gulp-clean-css"</span>);		<span class="comment">//css文件压缩</span></span><br><span class="line"><span class="keyword">const</span> template = <span class="built_in">require</span>(<span class="string">"gulp-template-compile"</span>);      <span class="comment">//html模板文件转为js文件</span></span><br><span class="line"><span class="keyword">const</span> del = <span class="built_in">require</span>(<span class="string">"del"</span>);				<span class="comment">//清空文件目录</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack-stream"</span>);		<span class="comment">//在gulp中执行webpack的打包</span></span><br><span class="line"><span class="keyword">const</span> rev = <span class="built_in">require</span>(<span class="string">"gulp-rev"</span>);			<span class="comment">//内容hash码附加到文件名</span></span><br></pre></td></tr></table></figure>
+<p>2.html模块转成js并合并</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"gulpKeepAccountsHtml"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> stream = gulp.src(<span class="string">"keepAccounts/templates/**/*.html"</span>)</span><br><span class="line">        .pipe(template(&#123;<span class="attr">namespace</span>: <span class="string">"keepAccountsTmpl"</span>&#125;))</span><br><span class="line">        .pipe(concat(<span class="string">"keepAccountsTmpl.js"</span>))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">".tmp"</span>))</span><br><span class="line">       <span class="keyword">return</span> stream</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​    因为项目里用的html文件只是一些纯模板文件，所以转换后放一个变量下引入即可，不需要采用html文件传统的去注释等处理。通过template插件将目录下的所有html文件通过template插件转成js模块，namespace可以指定转换后的模板文件放在windows下对应的变量名里。然后合并成keepAccountsTmpl.js文件，并输出到一个.tmp文件夹中。</p>
+<p>3.js模块合并</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js模块=&gt;html模块执行完之后执行</span></span><br><span class="line">gulp.task(<span class="string">"gulpKeepAccountsJS"</span>, [<span class="string">"gulpKeepAccountsHtml"</span>], () =&gt; &#123;</span><br><span class="line">    gulp.src([<span class="string">"keepAccounts/scripts/**/*.js"</span>, <span class="string">".tmp/keepAccountsTmpl.js"</span>])</span><br><span class="line">        .pipe(concat(<span class="string">"app.js"</span>))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">"keepAccounts"</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​    因为这是一个独立的模块，html模板代码很少，所以我们和js模块都打入一个包里。那么打包js模块时，需要html模块先转化完js，所以这个任务需要先依赖于gulpKeepAccountsHtml任务完成，放在此任务的依赖任务中。然后引入对应的js，html转换好的js模块即完成js模块的合并。</p>
+<p>4.js模块打包压缩</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">"gulpKeepAccountsJSPro"</span>, [<span class="string">"gulpKeepAccountsHtml"</span>]() =&gt; &#123;</span><br><span class="line">    gulp.src([<span class="string">"keepAccounts/scripts/**/*.js"</span>, <span class="string">".tmp/keepAccountsTmpl.js"</span>])</span><br><span class="line">        .pipe(concat(<span class="string">"app.js"</span>))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">"keepAccounts"</span>))</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(rev())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">"../dist/financial/keepAccounts"</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​    在产品环境中，代码需要打包压缩加上内容哈希码，这样如果第二次上线这个模块的包没有更新，用户就不需要重新下载这个包。在开发环境合并（此模块合并给其他项目使用）的基础上，压缩加上内容哈希码后输入到产品环境包目录下。</p>
+<p>​    js模块打包还应该注意的一个问题是，文件合并顺序问题。有些工具类文件、样式要合并在前面，在src里文件数组的顺序就是会打包的顺序。</p>
+<p>6.新框架代码构建</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开发环境</span></span><br><span class="line">gulp.task(<span class="string">'runES6'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'scripts-es6/main.js'</span>)</span><br><span class="line">        .pipe(webpack(&#123;<span class="attr">config</span>:<span class="built_in">require</span>(<span class="string">'./config/webpack.config.dev.js'</span>),<span class="attr">watch</span>: <span class="literal">true</span>&#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">"packagedFiles/es6"</span>));</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>​    项目里有些模块代码是react写的，采用了webpack的打包方式。在产品模块构建时，为了方便统一构建，在gulp加入构建新框架的代码。不同的环境引入不同的webpack配置环境，开发引入的配置文件里开启了sorce-map，配置参数watch为true开启了webpack的监听。        </p>
+<p>7.开发环境监听文件的改变</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开发环境监听</span></span><br><span class="line">gulp.task(<span class="string">"watch"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    livereload.listen();</span><br><span class="line">    gulp.watch(jsFiles, [<span class="string">"gulpAppJS"</span>]);</span><br><span class="line">    gulp.watch([<span class="string">"views/**/*.html"</span>, <span class="string">"!views/MainView.html"</span>],[<span class="string">"gulpTemplate"</span>]);</span><br><span class="line">    gulp.watch(cssFiles, [<span class="string">"gulpAppCSS"</span>]);</span><br><span class="line">    gulp.watch([<span class="string">"data/*"</span>], [<span class="string">"copyData"</span>]);</span><br><span class="line">    gulp.watch([<span class="string">"keepAccounts/templates/**/*.html"</span>, <span class="string">"keepAccounts/scripts/**/*.js"</span>], [<span class="string">"gulpKeepAccountsJS"</span>]);</span><br><span class="line">    gulp.watch([<span class="string">"keepAccounts/styles/**/*.css"</span>], [<span class="string">"gulpKeepAccountsCSS"</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>​    两个模块的文件分别监听，当文件发生改变时重新打包。因为最终运行的项目是一个外壳项目，需要把更新后的代码重新打包传过去。</p>
+<p>8.开发产品环境构建</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*开发环境构建*/</span></span><br><span class="line"><span class="comment">//运行命令 gulp</span></span><br><span class="line">gulp.task(<span class="string">"default"</span>, [<span class="string">"copyData"</span>, <span class="string">"gulpTemplate"</span>, <span class="string">"gulpAppCSS"</span>, <span class="string">"gulpAppJS"</span>, <span class="string">"copyImage"</span>, <span class="string">"gulpKeepAccountsJS"</span>, <span class="string">"gulpKeepAccountsCSS"</span>,<span class="string">"watch"</span>,<span class="string">"runES6"</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*生产环境构建*/</span></span><br><span class="line"><span class="comment">//运行命令 gulp build</span></span><br><span class="line">gulp.task(<span class="string">"build"</span>, [<span class="string">"delFinancial"</span>, <span class="string">"copyData"</span>, <span class="string">"gulpTemplate"</span>, <span class="string">"gulpAppCSS"</span>, <span class="string">"gulpAppJS"</span>, <span class="string">"copyImage"</span>, <span class="string">"gulpKeepAccountsJSPro"</span>, <span class="string">"gulpKeepAccountsCSSPro"</span>,<span class="string">"runES6Pro"</span>]);</span><br></pre></td></tr></table></figure>
+<p>​    两个命令分别对应不同的环境，执行不同的任务。</p>
+<h4 id="四、常用的项目实践"><a href="#四、常用的项目实践" class="headerlink" title="四、常用的项目实践"></a>四、常用的项目实践</h4><blockquote>
+<p>上种项目实践实用于局部小范围的打包，大范围的用依赖注释打包更方便。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">gulp file:</span><br><span class="line"><span class="keyword">const</span> usemin = <span class="built_in">require</span>(<span class="string">'gulp-usemin'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'usemin'</span>,[<span class="string">"gulpHtml"</span>],()=&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'index.html'</span>)</span><br><span class="line">        .pipe(usemin(&#123;</span><br><span class="line">            css:[gulpif(argv.prod, cleanCSS()), rev()],</span><br><span class="line">            appCSS:[gulpif(argv.prod, cleanCSS()), rev()],</span><br><span class="line">            js:[gulpif(argv.prod,uglify()), rev()],</span><br><span class="line">            appJS:[gulpif(argv.prod,uglify()), rev()],</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(outPath))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">html:</span><br><span class="line">&lt;!-- build:appJS js/app.min.js --&gt;</span><br><span class="line">&lt;script src=<span class="string">"scripts/app.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">".tmp/htmlToJs/commonTmpl.js"</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;!-- endbuild --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- build:css css/vendor.min.css --&gt;</span><br><span class="line">&lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"../common/css/noticeOfAccountSet.css"</span>&gt;</span><br><span class="line">&lt;link rel=<span class="string">"stylesheet"</span> href=<span class="string">"node_modules/Dui/dist/css/dui.min.css"</span>&gt;</span><br><span class="line">&lt;!-- endbuild --&gt;</span><br></pre></td></tr></table></figure>
+<p>通过gulp-usemin插件可以通过读取html文件的注释来进行打包处理。同样的js处理执行两个任务名称是为了不会压缩执行多次；</p>
+<h4 id="五、遇到的问题"><a href="#五、遇到的问题" class="headerlink" title="五、遇到的问题"></a>五、遇到的问题</h4><p>1.脚本在本地没问题，在测试环境第一次打包缺乏模版文件，第二次打包才能正常运行？</p>
+<p>​    因为没有仔细阅读官方文档，要保证gulp的依赖文件先执行完是有条件的，“请一定要确保你所依赖的任务列表中的任务都使用了正确的异步执行方式：使用一个 callback，或者返回一个 promise 或 stream”，官方文档说。因为gulp 会一次性运行所有的 task 并且不做任何等待，如果想要以让依赖线执行完，必须告诉gulp依赖什么任务，依赖的任务什么时候完成，而通过callback，返回stream这些方式能告诉gulp依赖的任务已经执行完。</p>
+<p>2.合并完文件后，运行项目请求能回来但是不能渲染上数据？</p>
+<p>​    没有考虑model、collections、viewModels的合并顺序，原来是统一将js模块下的代码都合并。解决方案是按顺序将文件目录写进src的数组里，按顺序合并。这也说明了一个项目规划好目录的重要性。</p>
+<p>3.样式显示错误？</p>
+<p>​    有两个css文件打包顺序错误，导致后面一个文件的样式覆盖了上一个文件，这两个文件都是写分页组件相关的。解决方案为了不多引入插件，将应该后打入的文件名改为z开头，合并顺序是按文件名字母排列，也可以引入order插件解决。</p>
+<p>4.引入webpack后执行文件报错？</p>
+<p>(1)configuration.output.path: The provided value “./packagedFiles/es6” is not an absolute path!</p>
+<p>   -&gt; The output directory as <strong>absolute path</strong> (required).</p>
+<p>​    解决：产生错误的地方是webpack.config.js的配置文件的output中path路径，这个路径改了多次都没有生效，后来想到的是，用gulp.dist可以直接输出打包后的文件在正确的地址，用不着里面配置的output，去掉之后解决。</p>
+<p>(2)Chunk.entry was removed. Use hasRuntime() </p>
+<p>​    解决：产生的原因是引用的插件webpack-stream里面的webpack已经升级到3.4.1，而项目里的webpak版本还是1.13.2，升级版本后问题解决。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/25/前后端交流的爱恨情仇/" rel="prev" title="前后端交流的爱恨情仇">
+                前后端交流的爱恨情仇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/cat.jpeg"
+                alt="草丛小精灵" />
+            
+              <p class="site-author-name" itemprop="name">草丛小精灵</p>
+              <p class="site-description motion-element" itemprop="description">我只是一只可爱的小猫咪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/meimeiGu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto://ermei.gu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gulp的使用"><span class="nav-number">1.</span> <span class="nav-text">gulp的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、gulp的介绍"><span class="nav-number">1.1.</span> <span class="nav-text">一、gulp的介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、gulp的四个参数"><span class="nav-number">1.2.</span> <span class="nav-text">二、gulp的四个参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、项目实践"><span class="nav-number">1.3.</span> <span class="nav-text">三、项目实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、常用的项目实践"><span class="nav-number">1.4.</span> <span class="nav-text">四、常用的项目实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、遇到的问题"><span class="nav-number">1.5.</span> <span class="nav-text">五、遇到的问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wangmm.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/03/18/gulp的使用/';
+          this.page.identifier = '2018/03/18/gulp的使用/';
+          this.page.title = 'gulp的使用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wangmm.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz',
+        appKey: 'wpT0IWBk3JtQvpvmgQ8sBdWO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz", "wpT0IWBk3JtQvpvmgQ8sBdWO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
