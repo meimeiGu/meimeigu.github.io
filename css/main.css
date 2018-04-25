@@ -1091,6 +1091,8 @@ pre .javascript .function {
 }
 .header {
   background: transparent;
+  background-image: url("http://oo5aasoph.bkt.clouddn.com/the-seagulls-3144601_1920.jpg");
+  background-position: -11px -725px;
 }
 .header-inner {
   position: relative;
@@ -1823,7 +1825,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2a77d1;
+  background: #9f5dff;
 }
 .links-of-blogroll {
   font-size: 13px;
