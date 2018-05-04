@@ -105,19 +105,19 @@
 
 
 
-<meta name="description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
+<meta name="description" content="一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof null">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS系列之原型链">
 <meta property="og:url" content="http://yoursite.com/2018/05/05/JS系列之原型链/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
+<meta property="og:description" content="一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof null">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/Users/wangmm/blog/public/images/prototype.png">
-<meta property="og:updated_time" content="2018-05-04T16:14:08.000Z">
+<meta property="og:image" content="http://yoursite.com/images/prototype.png">
+<meta property="og:updated_time" content="2018-05-04T16:32:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列之原型链">
-<meta name="twitter:description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
-<meta name="twitter:image" content="http://yoursite.com/Users/wangmm/blog/public/images/prototype.png">
+<meta name="twitter:description" content="一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof null">
+<meta name="twitter:image" content="http://yoursite.com/images/prototype.png">
 
 
 
@@ -358,7 +358,7 @@
       
 
       
-        <h3 id="JS系列之原型链"><a href="#JS系列之原型链" class="headerlink" title="JS系列之原型链"></a>JS系列之原型链</h3><h5 id="一、对象"><a href="#一、对象" class="headerlink" title="一、对象"></a>一、对象</h5><p>​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清：</p>
+        <h5 id="一、对象"><a href="#一、对象" class="headerlink" title="一、对象"></a>一、对象</h5><p>​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="string">"aaa"</span>  <span class="comment">//string</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">123</span>    <span class="comment">//number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>   <span class="comment">//boolean</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>    <span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>     <span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  <span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)   //<span class="title">function</span></span></span><br><span class="line"><span class="function"><span class="title">typeof</span> </span>&#123;a:<span class="number">1</span>,<span class="attr">b</span>:<span class="number">2</span>&#125;    <span class="comment">//object</span></span><br></pre></td></tr></table></figure>
 <p>​    里前除了前四种为值类型，其他函数、数组、null都为引用类型，而在js中，所有的引用类型都是对象。在ECMA-262里把对象定义为：“无序属性的集合，其属性可以包含基本值、对象或者函数“，即对象为若干属性的集合。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">a.biu = <span class="string">"xixixi"</span>;</span><br><span class="line">a.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a <span class="keyword">instanceof</span> <span class="built_in">Function</span>)  <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a)  <span class="comment">//&#123; [Function: a] biu: 'xixixi', age: 18 &#125;</span></span><br></pre></td></tr></table></figure>
@@ -379,7 +379,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FF</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">FF.prototype.name=<span class="string">'hhh'</span>;</span><br><span class="line">FF.prototype.age=<span class="number">18</span>;</span><br><span class="line">FF.prototype.likeyou = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> xf = <span class="keyword">new</span> FF();</span><br><span class="line">xf.likeyou();   <span class="comment">//18</span></span><br></pre></td></tr></table></figure>
 <p>​    FF是一个函数，xf为从FF中new出来的一个对象，就能调用FF函数prototype里对象的所有属性。因为每个对象都有一个<code>__proto__</code>属性，指向创建这个对象的函数的prototype属性。即<code>xf.__proto__ === FF.prototype</code>。</p>
 <p><strong>每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<strong>proto</strong>属性，指向创建函数的prototype属性。</strong></p>
-<h5 id="四、以图会友"><a href="#四、以图会友" class="headerlink" title="四、以图会友"></a>四、以图会友</h5><p><img src="/Users/wangmm/blog/public/images/prototype.png" alt="prototype"></p>
+<h5 id="四、以图会友"><a href="#四、以图会友" class="headerlink" title="四、以图会友"></a>四、以图会友</h5><p><img src="/images/prototype.png" alt=""></p>
 <p>​    初看这个图会觉得有点“群魔乱舞”啊，但是这里面就遵循两个规则，每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<code>__proto__</code>属性，指向创建函数的prototype属性。</p>
 <p>​    这里需要解释的是为什么<code>Function.__proto__ === Function.prototype</code>，因为函数是对象，那么肯定有<code>__proto__</code>属性指向创建Function的函数d饿prototype，而函数是谁创建的，既然为函数，肯定是Function创建的，所以Function是由自身创建。还有一点是Object.prototype，这是一个特例，并不指向自身，而是指向为null。</p>
 <p>​    这样看，是不是很简单，未完，请看下一节。</p>
@@ -552,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS系列之原型链"><span class="nav-number">1.</span> <span class="nav-text">JS系列之原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、对象"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、函数和对象的关系"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、函数和对象的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、prototype原型"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、prototype原型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四、以图会友"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、以图会友</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、对象"><span class="nav-number">1.</span> <span class="nav-text">一、对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、函数和对象的关系"><span class="nav-number">2.</span> <span class="nav-text">二、函数和对象的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、prototype原型"><span class="nav-number">3.</span> <span class="nav-text">三、prototype原型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四、以图会友"><span class="nav-number">4.</span> <span class="nav-text">四、以图会友</span></a></li></ol></div>
             
 
           </div>
