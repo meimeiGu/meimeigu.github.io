@@ -105,16 +105,19 @@
 
 
 
-<meta name="description" content="我只是一只可爱的小猫咪。">
-<meta property="og:type" content="website">
+<meta name="description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
+<meta property="og:type" content="article">
 <meta property="og:title" content="草丛小精灵">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/####JS对象/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="我只是一只可爱的小猫咪。">
+<meta property="og:description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/Users/wangmm/blog/public/images/prototype.png">
+<meta property="og:updated_time" content="2018-05-04T16:04:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="草丛小精灵">
-<meta name="twitter:description" content="我只是一只可爱的小猫咪。">
+<meta name="twitter:description" content="JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof">
+<meta name="twitter:image" content="http://yoursite.com/Users/wangmm/blog/public/images/prototype.png">
 
 
 
@@ -144,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/####JS对象/"/>
 
 
 
 
 
-  <title>草丛小精灵</title>
+  <title> | 草丛小精灵</title>
   
 
 
@@ -169,8 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,9 +255,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -285,9 +287,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/04/####JS对象/" itemprop="url">未命名</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -358,19 +358,32 @@
       
 
       
-        
-          
-          JS系列之原型链一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清：
-12345678typeof "aaa"  //stringtypeof 123    //numbertypeof tru
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/04/####JS对象/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <h3 id="JS系列之原型链"><a href="#JS系列之原型链" class="headerlink" title="JS系列之原型链"></a>JS系列之原型链</h3><h5 id="一、对象"><a href="#一、对象" class="headerlink" title="一、对象"></a>一、对象</h5><p>​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="string">"aaa"</span>  <span class="comment">//string</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">123</span>    <span class="comment">//number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span>   <span class="comment">//boolean</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span>    <span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>     <span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  <span class="comment">//object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)   //<span class="title">function</span></span></span><br><span class="line"><span class="function"><span class="title">typeof</span> </span>&#123;a:<span class="number">1</span>,<span class="attr">b</span>:<span class="number">2</span>&#125;    <span class="comment">//object</span></span><br></pre></td></tr></table></figure>
+<p>​    里前除了前四种为值类型，其他函数、数组、null都为引用类型，而在js中，所有的引用类型都是对象。在ECMA-262里把对象定义为：“无序属性的集合，其属性可以包含基本值、对象或者函数“，即对象为若干属性的集合。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">a.biu = <span class="string">"xixixi"</span>;</span><br><span class="line">a.age = <span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a <span class="keyword">instanceof</span> <span class="built_in">Function</span>)  <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a)  <span class="comment">//&#123; [Function: a] biu: 'xixixi', age: 18 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>​    上图证明了函数是一个对象，可以为函数增加属性。</p>
+<p><strong>所有引用类型都是对象。</strong></p>
+<h5 id="二、函数和对象的关系"><a href="#二、函数和对象的关系" class="headerlink" title="二、函数和对象的关系"></a>二、函数和对象的关系</h5><p>​    上面有说到数组是对象，函数是对象。那对象又是怎么来的，如果说对象都是函数创建的，那函数与对象之间就有点说不清了，怎么证明对象都是函数创建的呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// let a = &#123;a:1&#125;</span></span><br><span class="line"><span class="comment">// let b = ["1"]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">Object</span>)	<span class="comment">//function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">Array</span>)	<span class="comment">//function</span></span><br></pre></td></tr></table></figure>
+<p>​    通过typeof可以看出Object和Array都是函数，所以可以说对象都是函数创建的。</p>
+<p><strong>对象都是函数创建的</strong>。</p>
+<h5 id="三、prototype原型"><a href="#三、prototype原型" class="headerlink" title="三、prototype原型"></a>三、prototype原型</h5><p>​    在第一部分说过，函数是对象，即它也是属性的集合。而所有函数都有一个js默认添加的属性prototype。看下图：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FF</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(FF.prototype)   <span class="comment">//FF &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(FF.prototype.constructor)	<span class="comment">//[Function: FF]</span></span><br></pre></td></tr></table></figure>
+<p>​    函数都会有prototype属性，prototype为一个对象。对象里面默认有一个constructor属性值指向这个函数本身。</p>
+<p>​    我们可以为自定义函数添加prototype属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FF</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">FF.prototype.name=<span class="string">'hhh'</span>;</span><br><span class="line">FF.prototype.age=<span class="number">18</span>;</span><br><span class="line"><span class="built_in">console</span>.log(FF.prototype)   <span class="comment">//FF &#123; name: 'hhh', age: '18' &#125;</span></span><br></pre></td></tr></table></figure>
+<p>​    这样做有什么作用呢？这里可以以jquery代码为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jQuery.fn = jQuery.prototype</span><br><span class="line">jQuery.fn.extend( &#123;</span><br><span class="line">	show: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> showHide( <span class="keyword">this</span>, <span class="literal">true</span> );</span><br><span class="line">	&#125;</span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure>
+<p>​    $(“xxx”)是实例的jQuery对象，正因为有了prototype，所以我们可以潇洒自如的使用jQuery原型里的方法。以自定义的函数为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FF</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">FF.prototype.name=<span class="string">'hhh'</span>;</span><br><span class="line">FF.prototype.age=<span class="number">18</span>;</span><br><span class="line">FF.prototype.likeyou = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> xf = <span class="keyword">new</span> FF();</span><br><span class="line">xf.likeyou();   <span class="comment">//18</span></span><br></pre></td></tr></table></figure>
+<p>​    FF是一个函数，xf为从FF中new出来的一个对象，就能调用FF函数prototype里对象的所有属性。因为每个对象都有一个<code>__proto__</code>属性，指向创建这个对象的函数的prototype属性。即<code>xf.__proto__ === FF.prototype</code>。</p>
+<p><strong>每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<strong>proto</strong>属性，指向创建函数的prototype属性。</strong></p>
+<h5 id="四、以图会友"><a href="#四、以图会友" class="headerlink" title="四、以图会友"></a>四、以图会友</h5><p><img src="/Users/wangmm/blog/public/images/prototype.png" alt="prototype"></p>
+<p>​    初看这个图会觉得有点“群魔乱舞”啊，但是这里面就遵循两个规则，每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<code>__proto__</code>属性，指向创建函数的prototype属性。</p>
+<p>​    这里需要解释的是为什么<code>Function.__proto__ === Function.prototype</code>，因为函数是对象，那么肯定有<code>__proto__</code>属性指向创建Function的函数d饿prototype，而函数是谁创建的，既然为函数，肯定是Function创建的，所以Function是由自身创建。还有一点是Object.prototype，这是一个特例，并不指向自身，而是指向为null。</p>
+<p>​    这样看，是不是很简单，未完，请看下一节。</p>
+
       
     </div>
     
@@ -387,181 +400,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/前后端交流的爱恨情仇/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="草丛小精灵">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/cat.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="草丛小精灵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/25/前后端交流的爱恨情仇/" itemprop="url">前后端交流的爱恨情仇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T10:58:50+08:00">
-                2018-04-25
-              </time>
+              <a href="/2018/04/25/前后端交流的爱恨情仇/" rel="next" title="前后端交流的爱恨情仇">
+                <i class="fa fa-chevron-left"></i> 前后端交流的爱恨情仇
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/25/前后端交流的爱恨情仇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/25/前后端交流的爱恨情仇/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/25/前后端交流的爱恨情仇/" class="leancloud_visitors" data-flag-title="前后端交流的爱恨情仇">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          前后端交流的爱恨情仇前后端请求对应
-
-
-参数
-类型
-前端（content-type）
-前端发送数据格式
-后端
-
-
-
-
-键值URL中
-POST／GET
-
-ip:port/xxx/xx?key1=val1
-@RequestParam
-
-
-参数值在url后
-POST／GET
-
-ip:port/xx/val
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/25/前后端交流的爱恨情仇/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -571,161 +431,11 @@ ip:port/xx/val
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/gulp的使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="草丛小精灵">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/cat.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="草丛小精灵">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/gulp的使用/" itemprop="url">gulp的使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T10:58:50+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/18/gulp的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/18/gulp的使用/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/18/gulp的使用/" class="leancloud_visitors" data-flag-title="gulp的使用">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-本文将介绍gulp的基础使用和一次项目实践。
-
-一、gulp的介绍1.gulp是一个工具，用于在开发工作流程中自动执行我们需要执行的任务，比如修改代码后重新编译，构建环境等，gulp可以一行命令搞定这些重复琐碎的工作。
-二、gulp的四个参数1.gulp.src (globs[,optons]) 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/18/gulp的使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -733,6 +443,13 @@ ip:port/xx/val
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -753,8 +470,17 @@ ip:port/xx/val
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -816,6 +542,22 @@ ip:port/xx/val
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS系列之原型链"><span class="nav-number">1.</span> <span class="nav-text">JS系列之原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、对象"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、函数和对象的关系"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、函数和对象的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、prototype原型"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、prototype原型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四、以图会友"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、以图会友</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -949,6 +691,10 @@ ip:port/xx/val
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
