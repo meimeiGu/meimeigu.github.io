@@ -113,7 +113,7 @@
 <meta property="og:description" content="一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof null">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/prototype.png">
-<meta property="og:updated_time" content="2018-05-05T15:22:20.000Z">
+<meta property="og:updated_time" content="2018-05-07T02:19:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列(一)原型">
 <meta name="twitter:description" content="一、对象​    在说原型链之前需要先弄清楚js里的类型，js里常说的是“一切都是对象”，但其实不是，分为两大种，值类型和引用类型，通过typeof可以分清： 12345678typeof &quot;aaa&quot;  //stringtypeof 123    //numbertypeof true   //booleantypeof undefined    //undefinedtypeof null">
@@ -381,7 +381,7 @@
 <p><strong>每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<strong>proto</strong>属性，指向创建函数的prototype属性。</strong></p>
 <h5 id="四、以图会友"><a href="#四、以图会友" class="headerlink" title="四、以图会友"></a>四、以图会友</h5><p><img src="/images/prototype.png" alt=""></p>
 <p>​    初看这个图会觉得有点“群魔乱舞”啊，但是这里面就遵循两个规则，每个函数都有prototype属性，属性值为一个对象；每个对象都有一个<code>__proto__</code>属性，指向创建函数的prototype属性。</p>
-<p>​    这里需要解释的是为什么<code>Function.__proto__ === Function.prototype</code>，因为函数是对象，那么肯定有<code>__proto__</code>属性指向创建Function的函数d饿prototype，而函数是谁创建的，既然为函数，肯定是Function创建的，所以Function是由自身创建。还有一点是Object.prototype，这是一个特例，并不指向自身，而是指向为null。</p>
+<p>​    这里需要解释的是为什么<code>Function.__proto__ === Function.prototype</code>，因为函数是对象，那么肯定有<code>__proto__</code>属性指向创建Function的函数的prototype，而函数是谁创建的，既然为函数，肯定是Function创建的，所以Function是由自身创建。还有一点是Object.prototype，这是一个特例，并不指向自身，而是指向为null。</p>
 <p>​    这样看，是不是很简单，未完，请看下一节。</p>
 
       
