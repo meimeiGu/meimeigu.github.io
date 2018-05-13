@@ -105,17 +105,21 @@
 
 
 
-<meta name="description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 #####">
+<meta name="description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 ####二、js里的继">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS系列(三)继承">
 <meta property="og:url" content="http://yoursite.com/2018/05/12/JS系列(三)继承/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 #####">
+<meta property="og:description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 ####二、js里的继">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T09:28:04.000Z">
+<meta property="og:image" content="http://yoursite.com/images/partPrototype.png">
+<meta property="og:image" content="http://yoursite.com/images/console.png">
+<meta property="og:image" content="http://yoursite.com/images/animals.png">
+<meta property="og:updated_time" content="2018-05-13T07:01:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列(三)继承">
-<meta name="twitter:description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 #####">
+<meta name="twitter:description" content="一、浅探来源javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。 ####二、js里的继">
+<meta name="twitter:image" content="http://yoursite.com/images/partPrototype.png">
 
 
 
@@ -356,8 +360,21 @@
       
 
       
-        <h5 id="一、浅探来源"><a href="#一、浅探来源" class="headerlink" title="一、浅探来源"></a>一、浅探来源</h5><p>javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。</p>
-<p>#####</p>
+        <h4 id="一、浅探来源"><a href="#一、浅探来源" class="headerlink" title="一、浅探来源"></a>一、浅探来源</h4><p>javascript里原型其实很简单，无非是函数默认添加了一个prototype属性，通过这个函数创建的实例有隐形属性指针指向这个prototype属性罢了。那么为什么会有这样的机制了，看一个文章解释说是js语言里都是对象，对象之间肯定有联系，通过原型可以联系，另一方面面向对象的语言基本都有继承的概念，js为了实现不那么厚重，直接通过原型链来实现在js里的继承。</p>
+<p>####二、js里的继承</p>
+<p>js里的继承是什么呢，我认为就是js里的对象拥有有创建这个对象的原型，创建这个对象的原型的原型里的属性，一直到Object.prototype。</p>
+<p><img src="/images/partPrototype.png" alt=""></p>
+<p>在访问一个对象的属性时，先在对象的基础属性里找，找不到，就沿着<code>__proto__</code>这条线往上找，这就是原型链。</p>
+<p><img src="/images/console.png" alt=""></p>
+<p>上图的ff是一个函数的实例，拥有创建它的函数FF的原型，而FF的原型也是一种对象，那么自然就指向了创建对对象的Object的原型。ff能访问到函数FF的原型，能访问到FF的原型的原型上的属性，这其实就是js里的继承。所以ff能访问到Object原型上所有属性。</p>
+<h4 id="三、js里的继承实现"><a href="#三、js里的继承实现" class="headerlink" title="三、js里的继承实现"></a>三、js里的继承实现</h4><h5 id="（一）原型链继承"><a href="#（一）原型链继承" class="headerlink" title="（一）原型链继承"></a>（一）原型链继承</h5><p>js里继承的基本思想，就是通过原型链，将对象串起来。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animals</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Animals.prototype.name = <span class="string">'animal'</span></span><br><span class="line">Animals.prototype.age = <span class="string">'5'</span></span><br><span class="line">Animals.prototype.eat = [<span class="string">'meat'</span>]</span><br><span class="line">Animals.prototype.eatFood = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.eat)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Cat.prototype= <span class="keyword">new</span> Animals();</span><br><span class="line"><span class="keyword">var</span> smallCat = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="built_in">console</span>.log(smallCat.name)	<span class="comment">//'animal'</span></span><br><span class="line"><span class="built_in">console</span>.log(smallCat <span class="keyword">instanceof</span> Animals)    <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>通过下图可以清晰看到整个原型链串了起来：</p>
+<p><img src="/images/animals.png" alt=""></p>
+<p>通过将<code>Cat.prototype = Animals.prototype;</code>也能实现这个效果，但我认为这并不是继承，这只是将Cat的原型指向Animals的原型，没有继承它的思想和过程，只是生硬的让它们指向同一块地址。</p>
+<p>这种继承的方式缺点上一节也讲过，都是指针引用，对于引用类型，如果某一个继承的对象更改了相应属性，其他继承的对象所指向的属性也被更改。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Cat</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Cat.prototype= <span class="keyword">new</span> Animals();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Dog.prototype= <span class="keyword">new</span> Animals();</span><br><span class="line"><span class="keyword">var</span> smallCat = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="keyword">var</span> smallDog = <span class="keyword">new</span> Dog();</span><br><span class="line">smallCat.eat.push(<span class="string">'fish'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(smallDog.eat)   <span class="comment">//['meat', 'fish']</span></span><br></pre></td></tr></table></figure>
+<p>#####（二）</p>
 
       
     </div>
@@ -527,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、浅探来源"><span class="nav-number">1.</span> <span class="nav-text">一、浅探来源</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、浅探来源"><span class="nav-number">1.</span> <span class="nav-text">一、浅探来源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、js里的继承实现"><span class="nav-number">2.</span> <span class="nav-text">三、js里的继承实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#（一）原型链继承"><span class="nav-number">2.1.</span> <span class="nav-text">（一）原型链继承</span></a></li></ol></li></ol></div>
             
 
           </div>
