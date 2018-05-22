@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="草丛小精灵">
 <meta property="og:description" content="执行环境又称“执行上下文”，在执行代码段之前进行一些准备工作。  一、什么是执行环境首先看一段代码证明真的有执行环境，即在执行之前会做准备工作： 1234console.log(a)  //undefinedvar a = 10;console.log(b)  //报错 输出a的值是undefined，而输入变量b为报错。说明在执行环境的时候，识别到了a变量，并为它赋值为了undefined。执">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-22T15:20:09.000Z">
+<meta property="og:updated_time" content="2018-05-22T15:23:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列(四)执行环境">
 <meta name="twitter:description" content="执行环境又称“执行上下文”，在执行代码段之前进行一些准备工作。  一、什么是执行环境首先看一段代码证明真的有执行环境，即在执行之前会做准备工作： 1234console.log(a)  //undefinedvar a = 10;console.log(b)  //报错 输出a的值是undefined，而输入变量b为报错。说明在执行环境的时候，识别到了a变量，并为它赋值为了undefined。执">
@@ -363,7 +363,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a)  <span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(b)  <span class="comment">//报错</span></span><br></pre></td></tr></table></figure>
 <p>输出a的值是undefined，而输入变量b为报错。说明在执行环境的时候，识别到了a变量，并为它赋值为了undefined。执行环境定义了代码执行时变量或函数有权去访问的值。每个执行环境都对应着一个变量对象，里面保存在执行环境时定义的所有变量和函数。</p>
 <h5 id="二、谁有执行环境"><a href="#二、谁有执行环境" class="headerlink" title="二、谁有执行环境"></a>二、谁有执行环境</h5><p>全局代码，毫无疑问，执行环境栈第一个进入的就是全局代码执行环境，本身全局代码也是在<code>&lt;script&gt;</code>标签里。</p>
-<p>函数，每个函数都有自己的执行环境。jacascript每在执行一个代码段之前都会生成一个执行环境，而函数相当与在<code>new Function()</code>里传入了一个代码段。自然也会有执行环境。</p>
+<p>函数，每个函数都有自己的执行环境。javascript每在执行一个代码段之前都会生成一个执行环境，而函数相当与在<code>new Function()</code>里传入了一个代码段。自然也会有执行环境。</p>
 <h5 id="三、执行环境做了些什么"><a href="#三、执行环境做了些什么" class="headerlink" title="三、执行环境做了些什么"></a>三、执行环境做了些什么</h5><p>在全局环境下：</p>
 <p>1.变量、函数表达式——变量声明，默认赋值为undefined;</p>
 <p>2.this——赋值；</p>
