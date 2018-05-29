@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、庐山事情是这样的，在网上浏览JS相关知识时，看到了一道题，看着特别简单，咋一浏览，答案和我想的不一样？眉头一皱，事情仿佛并不简单。接下来，让我们请出这道题： 123456789101112131415161718var nAdd;var t = function() &amp;#123;    var n = 99;    nAdd = function() &amp;#123;         n++;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一道JS题引发的思考">
+<meta property="og:url" content="http://yoursite.com/2018/05/29/一道JS题引发的思考/index.html">
+<meta property="og:site_name" content="草丛小精灵">
+<meta property="og:description" content="一、庐山事情是这样的，在网上浏览JS相关知识时，看到了一道题，看着特别简单，咋一浏览，答案和我想的不一样？眉头一皱，事情仿佛并不简单。接下来，让我们请出这道题： 123456789101112131415161718var nAdd;var t = function() &amp;#123;    var n = 99;    nAdd = function() &amp;#123;         n++;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-29T14:42:09.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一道JS题引发的思考">
+<meta name="twitter:description" content="一、庐山事情是这样的，在网上浏览JS相关知识时，看到了一道题，看着特别简单，咋一浏览，答案和我想的不一样？眉头一皱，事情仿佛并不简单。接下来，让我们请出这道题： 123456789101112131415161718var nAdd;var t = function() &amp;#123;    var n = 99;    nAdd = function() &amp;#123;         n++;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'wangmm'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/29/一道JS题引发的思考/"/>
+
+
+
+
+
+  <title>一道JS题引发的思考 | 草丛小精灵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">草丛小精灵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/29/一道JS题引发的思考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="草丛小精灵">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/cat.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="草丛小精灵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一道JS题引发的思考</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T22:42:50+08:00">
+                2018-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/29/一道JS题引发的思考/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/29/一道JS题引发的思考/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/29/一道JS题引发的思考/" class="leancloud_visitors" data-flag-title="一道JS题引发的思考">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="一、庐山"><a href="#一、庐山" class="headerlink" title="一、庐山"></a>一、庐山</h5><p>事情是这样的，在网上浏览JS相关知识时，看到了一道题，看着特别简单，咋一浏览，答案和我想的不一样？眉头一皱，事情仿佛并不简单。接下来，让我们请出这道题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nAdd;</span><br><span class="line"><span class="keyword">var</span> t = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="number">99</span>;</span><br><span class="line">    nAdd = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">         n++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(n);</span><br><span class="line">       &#125;</span><br><span class="line">    <span class="keyword">return</span> t2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a1 = t();</span><br><span class="line"><span class="keyword">var</span> a2 = t();</span><br><span class="line">nAdd();</span><br><span class="line"></span><br><span class="line">a1(); </span><br><span class="line">a2();</span><br></pre></td></tr></table></figure>
+<h5 id="二、过程"><a href="#二、过程" class="headerlink" title="二、过程"></a>二、过程</h5><p>首先，想说明的是，每次调用都会产生执行环境，对应的变量，函数互不干扰。这点之前JS系列都有讲过。现在我们来从头分析这段小代码：</p>
+<p>1.全局环境进入执行环境栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">        globalContext</span><br><span class="line">    ];</span><br></pre></td></tr></table></figure>
+<p>2.全局环境初始化（做准备工作啦）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">  VO: [global],</span><br><span class="line">  Scope: [globalContext.VO],</span><br><span class="line">  nAdd:<span class="literal">undefined</span>,</span><br><span class="line">  t:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">  a1:<span class="literal">undefined</span>,</span><br><span class="line">  a2:<span class="literal">undefined</span>,</span><br><span class="line">  <span class="keyword">this</span>: globalContext.VO</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.在做准备工作中，t函数的作用域链被创建，并保存在函数的[[scope]]中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t.[[scope]]=[globalContext.VO]</span><br></pre></td></tr></table></figure>
+<p>4.执行a1=t()前，t的执行环境压入栈中，执行环境开始初始化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">		tContext,</span><br><span class="line">        globalContext</span><br><span class="line">    ];</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tContext = &#123;</span><br><span class="line">   AO:&#123;</span><br><span class="line">    <span class="built_in">arguments</span>:&#123;&#125;</span><br><span class="line">    n:<span class="literal">undefined</span>,</span><br><span class="line"> 	t2:<span class="function"><span class="keyword">function</span>,</span></span><br><span class="line"><span class="function">  &#125; </span></span><br><span class="line">  scope:[AO,globalContext.VO]</span><br><span class="line">&#125;</span><br><span class="line">t.[[scope]]=[tContext.VO]</span><br></pre></td></tr></table></figure>
+<p>5.执行环境初始化完毕，开始进入函数执行啦</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tContext = &#123;</span><br><span class="line">   AO:&#123;</span><br><span class="line">    <span class="built_in">arguments</span>:&#123;&#125;</span><br><span class="line">     n:<span class="number">99</span>,</span><br><span class="line"> 	 t2:<span class="function"><span class="keyword">function</span>,</span></span><br><span class="line"><span class="function">  &#125; </span></span><br><span class="line">  scope:[AO,globalContext.VO]</span><br><span class="line">&#125;</span><br><span class="line">globalContext = &#123;</span><br><span class="line">  nAdd:<span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">//<span class="title">nAdd</span>匿名函数——&gt;<span class="title">nAddNow</span></span></span><br><span class="line">nAddNow.[[scope]]:[tContext.VO,globalContext.VO]</span><br></pre></td></tr></table></figure>
+<p>重点来了，注意，此时，全局的nAdd变量，指向的是这个执行环境对应的匿名函数！！并且由于返回的是一个函数，还用了内部的变量，所以当t函数执行完毕后，只是相应的执行环境出栈了，对应的执行环境变量，即tContext并没有被销毁。</p>
+<p>nAddNow所指向的匿名函数它的作用域链，也已经被初始化为当前创建函数时的作用域链。</p>
+<p>6.当执行<code>var a2 = t();</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">  nAdd:<span class="function"><span class="keyword">function</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function">//全局变量<span class="title">nAdd</span>被重新赋予了<span class="title">a2</span>执行环境中的匿名函数,对应的作用域链也发生了改变</span></span><br></pre></td></tr></table></figure>
+<p>执行完这句后，nAdd执行了a2执行环境对应的匿名函数，这个匿名函数初始化的作用域链指向的也是a2对应的执行环境。</p>
+<p>7.开始执行nAdd()，初始化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//nAdd匿名函数——&gt;nAddNow</span></span><br><span class="line">nAddNowContext = &#123;</span><br><span class="line">   AO:&#123;</span><br><span class="line">    <span class="built_in">arguments</span>:&#123;&#125;</span><br><span class="line">  &#125; </span><br><span class="line">  scope:[AO,tContext.VO,globalContext.VO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，此时的tContext.VO是之前a2对应的执行环境变量，所以匿名函数n当前AO没有找到，在作用域链下一个找到n，所以对应a2里的n加了1。</p>
+<p>8.执行a()，先初始化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">t2Context = &#123;</span><br><span class="line">   AO:&#123;</span><br><span class="line">    <span class="built_in">arguments</span>:&#123;&#125;</span><br><span class="line">  &#125; </span><br><span class="line">  scope:[AO,tContext.VO,globalContext.VO]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印对应执行环境变量中的n，即可。</p>
+<h5 id="三、真面目"><a href="#三、真面目" class="headerlink" title="三、真面目"></a>三、真面目</h5><p>两点就能看清庐山了：</p>
+<p>1.不同函数调用对应不同执行环境，里面对应着不同执行变量；</p>
+<p>2.全局变量被不停赋值，变量指针指向的是最后一个（这里指向的是a2执行环境所对应的匿名函数）。</p>
+<p>简而言之，函数在创建时已经明确函数变量的作用域，以后不管在哪里调用这个函数，里面变量的取值在创建时都已经定好了。每次调用函数会创建新的执行环境，与其他执行环境无干扰无关联。</p>
+<h5 id="四、小变化"><a href="#四、小变化" class="headerlink" title="四、小变化"></a>四、小变化</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nAdd;</span><br><span class="line"><span class="keyword">var</span> t = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="number">99</span>;</span><br><span class="line">    nAdd = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">         n++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> t2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        nAdd();</span><br><span class="line">        <span class="built_in">console</span>.log(n);</span><br><span class="line">       &#125;</span><br><span class="line">    <span class="keyword">return</span> t2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a1 = t();</span><br><span class="line"><span class="keyword">var</span> a2 = t();</span><br><span class="line"></span><br><span class="line">nAdd();</span><br><span class="line"></span><br><span class="line">a1(); 	<span class="comment">//99;</span></span><br><span class="line">a2();	<span class="comment">//102</span></span><br></pre></td></tr></table></figure>
+<p>没错，当nAdd指向了a2的执行环境时，不论在哪里调用，改变的都是a2的值。为什么？因为函数变量的作用域在创建函数的时候就确定了，即在第二次为nAdd赋值，即创建这个匿名函数时，里面对应的n所对应的取值已经确定了—&gt;<code>scope:[tContext.VO,globalContext.VO]</code>.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/27/JS系列(五)作用域/" rel="next" title="JS系列(五)作用域">
+                <i class="fa fa-chevron-left"></i> JS系列(五)作用域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/cat.jpeg"
+                alt="草丛小精灵" />
+            
+              <p class="site-author-name" itemprop="name">草丛小精灵</p>
+              <p class="site-description motion-element" itemprop="description">我只是一只可爱的小猫咪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/meimeiGu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto://ermei.gu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、庐山"><span class="nav-number">1.</span> <span class="nav-text">一、庐山</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、过程"><span class="nav-number">2.</span> <span class="nav-text">二、过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、真面目"><span class="nav-number">3.</span> <span class="nav-text">三、真面目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四、小变化"><span class="nav-number">4.</span> <span class="nav-text">四、小变化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz',
+        appKey: 'wpT0IWBk3JtQvpvmgQ8sBdWO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz", "wpT0IWBk3JtQvpvmgQ8sBdWO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
