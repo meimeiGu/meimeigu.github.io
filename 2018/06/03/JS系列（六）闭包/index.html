@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="草丛小精灵">
 <meta property="og:description" content="一、闭包是什么闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-03T06:13:56.043Z">
+<meta property="og:updated_time" content="2018-07-02T13:40:20.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（六）闭包">
 <meta name="twitter:description" content="一、闭包是什么闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，">
@@ -366,7 +366,9 @@
 <p>打印i的时候，对应的VO里面没有值，去bigContext里找，对应的i已经成了3。所以执行array[i]都是找的bigCOntext.VO里的i，即都是3。</p>
 <h4 id="三、闭包的用途"><a href="#三、闭包的用途" class="headerlink" title="三、闭包的用途"></a>三、闭包的用途</h4><p>1.闭包，每次说起闭包，就会想起java里的私有变量。java里会通过返回函数来让外部函数调用到本不可以调用到的私有变量。而JS的闭包也很像，可以通过返回函数来调用到本不可以调用到的局部变量；</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animals</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">var</span> printN = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> printN</span><br><span class="line">&#125;</span><br><span class="line">Animals()(); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
-<h4 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h4><p>闭包理解起来就是这么简单，后续遇到好的例子或者用途，持续更新。</p>
+<p>2.更新，之前理解的是错的，之前更多的想到闭包是为了安全性，现在想来，安全个啥，执行环境销毁了变量都一直在。今天得知，闭包是为了在JS里实现<strong>静态变量</strong>的效果。在其他语言比如C语言可以通过static关键字实现，但是JS里如果要让一个变量实现静态变量的效果，让变量一直存在内存区中，只有通过闭包来实现了。那全局变量也能实现一直在内存区啊，这就是作用域不同了。全局变量作用域整个工程，而程序很多地方只是这个文件，或者这几个方法需要共享这个变量，那就可以通过闭包实现了。</p>
+<h4 id="四、闭包的缺点"><a href="#四、闭包的缺点" class="headerlink" title="四、闭包的缺点"></a>四、闭包的缺点</h4><p>1.既然执行环境销毁了变量还在，那缺点很明显了，占用内存！</p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>闭包理解起来就是这么简单，后续遇到好的例子或者用途，持续更新。</p>
 
       
     </div>
@@ -536,7 +538,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、闭包是什么"><span class="nav-number">1.</span> <span class="nav-text">一、闭包是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、闭包的示例"><span class="nav-number">2.</span> <span class="nav-text">二、闭包的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-常犯错误"><span class="nav-number">2.1.</span> <span class="nav-text">1.常犯错误</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、闭包的用途"><span class="nav-number">3.</span> <span class="nav-text">三、闭包的用途</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、闭包是什么"><span class="nav-number">1.</span> <span class="nav-text">一、闭包是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、闭包的示例"><span class="nav-number">2.</span> <span class="nav-text">二、闭包的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-常犯错误"><span class="nav-number">2.1.</span> <span class="nav-text">1.常犯错误</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、闭包的用途"><span class="nav-number">3.</span> <span class="nav-text">三、闭包的用途</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、闭包的缺点"><span class="nav-number">4.</span> <span class="nav-text">四、闭包的缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
             
 
           </div>
