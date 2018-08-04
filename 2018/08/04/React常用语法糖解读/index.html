@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、前提为什么要解读React语法糖，因为这都是应用React的基础写法，平常用的太多了。而不了解里面究竟做了什么，就不会知道自己写了什么。这也是因为对React中需要绑定this和super(props)有疑问。遂决定通过Es6转换Es5来理解基础的语法糖。 二、Class初探首先看一个最基础的语法糖，class，它在背后做了什么 12345678910111213141516171819202">
+<meta property="og:type" content="article">
+<meta property="og:title" content="草丛小精灵">
+<meta property="og:url" content="http://yoursite.com/2018/08/04/React常用语法糖解读/index.html">
+<meta property="og:site_name" content="草丛小精灵">
+<meta property="og:description" content="一、前提为什么要解读React语法糖，因为这都是应用React的基础写法，平常用的太多了。而不了解里面究竟做了什么，就不会知道自己写了什么。这也是因为对React中需要绑定this和super(props)有疑问。遂决定通过Es6转换Es5来理解基础的语法糖。 二、Class初探首先看一个最基础的语法糖，class，它在背后做了什么 12345678910111213141516171819202">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-04T11:38:35.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="草丛小精灵">
+<meta name="twitter:description" content="一、前提为什么要解读React语法糖，因为这都是应用React的基础写法，平常用的太多了。而不了解里面究竟做了什么，就不会知道自己写了什么。这也是因为对React中需要绑定this和super(props)有疑问。遂决定通过Es6转换Es5来理解基础的语法糖。 二、Class初探首先看一个最基础的语法糖，class，它在背后做了什么 12345678910111213141516171819202">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'wangmm'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/04/React常用语法糖解读/"/>
+
+
+
+
+
+  <title> | 草丛小精灵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">草丛小精灵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/04/React常用语法糖解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="草丛小精灵">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/cat.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="草丛小精灵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T23:30:50+08:00">
+                2018-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/04/React常用语法糖解读/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/04/React常用语法糖解读/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/08/04/React常用语法糖解读/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="一、前提"><a href="#一、前提" class="headerlink" title="一、前提"></a>一、前提</h4><p>为什么要解读React语法糖，因为这都是应用React的基础写法，平常用的太多了。而不了解里面究竟做了什么，就不会知道自己写了什么。这也是因为对React中需要绑定this和<code>super(props)</code>有疑问。遂决定通过Es6转换Es5来理解基础的语法糖。</p>
+<h4 id="二、Class初探"><a href="#二、Class初探" class="headerlink" title="二、Class初探"></a>二、Class初探</h4><p>首先看一个最基础的语法糖，class，它在背后做了什么</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animals</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">  eat()&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name+<span class="string">"吃什么"</span>)</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="keyword">static</span> sleep()&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"动物都需要睡觉"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> _createClass = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">defineProperties</span>(<span class="params">target, props</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">            <span class="keyword">var</span> descriptor = props[i];</span><br><span class="line">            <span class="comment">//能否通过for-in循环返回属性，默认为false</span></span><br><span class="line">            descriptor.enumerable = descriptor.enumerable || <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">//能否删除属性，修改属性的特性</span></span><br><span class="line">            descriptor.configurable = <span class="literal">true</span>;</span><br><span class="line">            <span class="comment">//能否修改属性值</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">"value"</span> <span class="keyword">in</span> descriptor) descriptor.writable = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">Object</span>.defineProperty(target, descriptor.key, descriptor);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">Constructor, protoProps, staticProps</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (protoProps) defineProperties(Constructor.prototype, protoProps);</span><br><span class="line">        <span class="keyword">if</span> (staticProps) defineProperties(Constructor, staticProps);</span><br><span class="line">        <span class="keyword">return</span> Constructor;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_classCallCheck</span>(<span class="params">instance, Constructor</span>) </span>&#123; <span class="keyword">if</span> (!(instance <span class="keyword">instanceof</span> Constructor)) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Cannot call a class as a function"</span>); &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Animals = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">Animals</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    _classCallCheck(<span class="keyword">this</span>, Animals);</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  _createClass(Animals, [&#123;</span><br><span class="line">    key: <span class="string">"eat"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">eat</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">"吃什么"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;], [&#123;</span><br><span class="line">    key: <span class="string">"sleep"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">sleep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"动物都需要睡觉"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]);</span><br><span class="line">  <span class="keyword">return</span> Animals;</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure>
+<p>我们先来看见创建用class创建一个类，它里面做了什么：</p>
+<p>1.首先第一步和Es5相同，创建了一个Animals的构造函数；</p>
+<p>2.constructor函数的作用就相当于Es5直接在构造函数里放的属性，每个继承的实例都可以独享一份；</p>
+<p>3.为什么有 _classCallCheck这个函数呢，因为Es6里通过class创建的类不能直接像Es5的构造函数，可以像函数那样直接调用，所以当发现调用者不是Animals的实例，会抛错；</p>
+<p>4.重点是<code>_createClass</code>函数，在class类中定义的方法，就相当于在原型链上定义的方法。在class中可以定义两种方法，普通的共享的方法和静态方法，静态方法不会被实例继承，只能被直接通过类调用。所以对应了_createClass函数的两个数组。普通方法定义在Constructor的prototype上，而静态方法，直接定义在Constructor上，相当于<code>Animals.eat = function(){}</code>。</p>
+<p>5.<code>defineProperties</code>函数，将共享的方法添加到原型链上，为什么还要通过Object.defineProperty来定义，主要是Es6通过class定义在原型链上的方法，有些特性不一样，比如说是不可枚举的，不能通过Object.keys(Animals.prototype)读到这些方法，所以通过defineProperty设置了这些属性的特性。</p>
+<h4 id="三、Class中的this"><a href="#三、Class中的this" class="headerlink" title="三、Class中的this"></a>三、Class中的this</h4><p>class中的this指向实例中的this，但是this的值是由程序执行时的环境所决定的，所以这里要格外小心。拿React中的代码来看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  clickButton= <span class="function"><span class="params">()</span>=&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=<span class="string">"App"</span>&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.clickButton&#125;&gt;按钮在这里&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//babel解析后</span></span><br><span class="line">_createClass(App, [&#123;</span><br><span class="line">    key: <span class="string">"render"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> React.createElement(</span><br><span class="line">        <span class="string">"div"</span>,</span><br><span class="line">        &#123; <span class="attr">className</span>: <span class="string">"App"</span> &#125;,</span><br><span class="line">        React.createElement(</span><br><span class="line">          <span class="string">"button"</span>,</span><br><span class="line">          &#123; <span class="attr">onClick</span>: <span class="keyword">this</span>.clickButton &#125;,</span><br><span class="line">          <span class="string">"\u6309\u94AE\u5728\u8FD9\u91CC"</span></span><br><span class="line">        )</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]);</span><br></pre></td></tr></table></figure>
+<p>从解析来看，将handleClick传入ReactCreateElement，最后传在方法放在对应的props上。那当用户点击执行的时候，对应的函数已经赋值给了其他地方，对应的执行环境也肯定已不是App，函数里的this指向也就不是App函数了。</p>
+<p>这个表现其实跟React，class语法糖无关，这是由JS里this取值特效决定的，就如下面这个小例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hi, this is '</span>, <span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.prototype.sayBay = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.sayHi()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">"hh"</span>);</span><br><span class="line"><span class="keyword">var</span> click = person.sayBay;</span><br><span class="line">click(); <span class="comment">//this.sayHi is not a function</span></span><br></pre></td></tr></table></figure>
+<p>当函数赋值给其他变量，再调用，this此时取值的环境是全局变量，也找不到对应的函数了。</p>
+<h4 id="四、React中绑定this"><a href="#四、React中绑定this" class="headerlink" title="四、React中绑定this"></a>四、React中绑定this</h4><p>React中绑定this有好几种写法，先列出看看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1推荐</span></span><br><span class="line">clickButton = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line"><span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="keyword">this</span>.clickButton = <span class="keyword">this</span>.clickButton.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3</span></span><br><span class="line">&lt;button onClick=&#123;<span class="keyword">this</span>.clickButton.bind(<span class="keyword">this</span>)&#125;&gt;按钮在这里&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/4</span></span><br><span class="line"><span class="regexp">&lt;button onClick=&#123;()=&gt;this.clickButton()&#125;&gt;按钮在这里&lt;/</span>button&gt;</span><br></pre></td></tr></table></figure>
+<p>1.箭头函数绑定为什么可以绑定this，我们看App的例子用箭头函数绑定clickButton后：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _ref;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> _temp, _this, _ret;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _ret = (_temp = (_this = _possibleConstructorReturn(<span class="keyword">this</span>, (_ref = App.__proto__ || <span class="built_in">Object</span>.getPrototypeOf(App)).call.apply(_ref, [<span class="keyword">this</span>].concat(args))), _this), _this.clickButton = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(_this);</span><br><span class="line">    &#125;, _temp), _possibleConstructorReturn(_this, _ret);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _createClass(App, [&#123;</span><br><span class="line">    key: <span class="string">"render"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> React.createElement(</span><br><span class="line">        <span class="string">"div"</span>,</span><br><span class="line">        &#123; <span class="attr">className</span>: <span class="string">"App"</span> &#125;,</span><br><span class="line">        React.createElement(</span><br><span class="line">          <span class="string">"button"</span>,</span><br><span class="line">          &#123; <span class="attr">onClick</span>: <span class="keyword">this</span>.clickButton &#125;,</span><br><span class="line">          <span class="string">"\u6309\u94AE\u5728\u8FD9\u91CC"</span></span><br><span class="line">        )</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]);</span><br></pre></td></tr></table></figure>
+<p>possibleConstructorReturn是为了返回实例的this赋值给<code>_this</code>不用关注，可以看见，如果是箭头函数的方法，把函数里的this显示改了具体的值<code>_this</code>。把方法放在了构造函数里，就相当于当成每个实例独有的属性来处理。</p>
+<p>2.bind方法绑定this，具体里面的处理看下面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> _this = _possibleConstructorReturn(<span class="keyword">this</span>, (App.__proto__ || <span class="built_in">Object</span>.getPrototypeOf(App)).call(<span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">  _this.clickButton = _this.clickButton.bind(_this);</span><br><span class="line">    <span class="keyword">return</span> _this;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _createClass(App, [&#123;</span><br><span class="line">    key: <span class="string">"clickButton"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">clickButton</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    key: <span class="string">"render"</span>,</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> React.createElement(</span><br><span class="line">        <span class="string">"div"</span>,</span><br><span class="line">        &#123; <span class="attr">className</span>: <span class="string">"App"</span> &#125;,</span><br><span class="line">        React.createElement(</span><br><span class="line">          <span class="string">"button"</span>,</span><br><span class="line">          &#123; <span class="attr">onClick</span>: <span class="keyword">this</span>.clickButton &#125;,</span><br><span class="line">          <span class="string">"\u6309\u94AE\u5728\u8FD9\u91CC"</span></span><br><span class="line">        )</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;]);</span><br></pre></td></tr></table></figure>
+<p>不同与箭头函数，类依然把方法绑定在了prototype上，只不过在构造函数里，对方法进行赋值，赋值为绑定了类或者实例的this的方法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/29/设计模式之观察者模式/" rel="next" title="设计模式之观察者模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之观察者模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/cat.jpeg"
+                alt="草丛小精灵" />
+            
+              <p class="site-author-name" itemprop="name">草丛小精灵</p>
+              <p class="site-description motion-element" itemprop="description">我只是一只可爱的小猫咪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/meimeiGu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto://ermei.gu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、前提"><span class="nav-number">1.</span> <span class="nav-text">一、前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、Class初探"><span class="nav-number">2.</span> <span class="nav-text">二、Class初探</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、Class中的this"><span class="nav-number">3.</span> <span class="nav-text">三、Class中的this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、React中绑定this"><span class="nav-number">4.</span> <span class="nav-text">四、React中绑定this</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz',
+        appKey: 'wpT0IWBk3JtQvpvmgQ8sBdWO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz", "wpT0IWBk3JtQvpvmgQ8sBdWO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
