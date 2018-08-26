@@ -105,18 +105,18 @@
 
 
 
-<meta name="description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
+<meta name="description" content="从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 前提准备这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS系列（七）this">
 <meta property="og:url" content="http://yoursite.com/2018/06/03/JS系列（七）this/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
+<meta property="og:description" content="从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 前提准备这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/reference.png">
-<meta property="og:updated_time" content="2018-08-26T13:12:48.138Z">
+<meta property="og:updated_time" content="2018-08-26T13:19:54.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（七）this">
-<meta name="twitter:description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
+<meta name="twitter:description" content="从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 前提准备这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第">
 <meta name="twitter:image" content="http://yoursite.com/images/reference.png">
 
 
@@ -358,11 +358,10 @@
       
 
       
-        <h4 id="一、从规范看this"><a href="#一、从规范看this" class="headerlink" title="一、从规范看this"></a>一、从规范看this</h4><p>陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。</p>
-<p>####二、前提准备</p>
-<p>这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第二种情况是函数，在调用函数，函数的执行环境会对函数里的this赋值。</p>
+        <h4 id="从规范看this"><a href="#从规范看this" class="headerlink" title="从规范看this"></a>从规范看this</h4><p>陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。</p>
+<h4 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h4><p>这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第二种情况是函数，在调用函数，函数的执行环境会对函数里的this赋值。</p>
 <p>第一种，全局代码的this取值不在严格模式下，值为全局对象，在严格模式下，值为undefined；第二种情况较复杂，所以我们这里主要讲在函数调用时，如何确定函数内this的值；</p>
-<h4 id="三、相关概念方法"><a href="#三、相关概念方法" class="headerlink" title="三、相关概念方法"></a>三、相关概念方法</h4><p>在正式拿出规范代码之前，我们先看几个有关联的概念和方法：</p>
+<h4 id="相关概念方法"><a href="#相关概念方法" class="headerlink" title="相关概念方法"></a>相关概念方法</h4><p>在正式拿出规范代码之前，我们先看几个有关联的概念和方法：</p>
 <p>1.Type</p>
 <p>在ECMAScript规范中，算法操作所产生的值都有与之相关联的类型。在规范中，将值类型分为了语言类型和规范类型，语言类型就是我们平时接触的所有类型（null、undefined、Object、String、Number），规范类型我理解为内部的机制，用来在底层辅助语言的行为逻辑。</p>
 <p>Type(x)用作表示x的类型的简写。</p>
@@ -392,7 +391,7 @@
 <p>Returns the base value component of the reference V.</p>
 </blockquote>
 <p>返回Reference类型对应的base值</p>
-<p>####四、规范解读</p>
+<p>####规范解读</p>
 <p>关于函数调用时this的取值，定位到规范中函数调用部分，摘出关于this的几个步骤：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>Let ref be the result <span class="keyword">of</span> evaluating MemberExpression.</span><br><span class="line"><span class="number">2.</span>If Type(ref) is Reference, then </span><br><span class="line">	a.If IsPropertyReference(ref) is <span class="literal">true</span>,then</span><br><span class="line">		i.Let thisValue be GetThisValue(ref)	<span class="comment">//GetBase</span></span><br><span class="line">	b.Else,the base <span class="keyword">of</span> ref is an Environment Record</span><br><span class="line">    	i.Let refEnv be GetBase(ref)</span><br><span class="line">		ii.Let thisValue be refEnv.WithBaseObject().</span><br><span class="line"><span class="number">3.</span>Else Type(ref) is not Reference,</span><br><span class="line">  	a.Let thisValue be <span class="literal">undefined</span>.</span><br></pre></td></tr></table></figure>
 <p>第一步，让ref为计算MemberExpression的结果</p>
@@ -421,7 +420,7 @@
 <p>从规范可看出，refEnv.WithBaseObject()会返回undefined.</p>
 <p>所以第二步简而言之，如果返回Reference类型base的值为对象，this为GetBase(ref)，否则为undefied。</p>
 <p>第三步：如果计算MemberExpression的结果不为Reference类型，this的值为undefined.</p>
-<h4 id="五、例子解读"><a href="#五、例子解读" class="headerlink" title="五、例子解读"></a>五、例子解读</h4><p>实例一：</p>
+<h4 id="例子解读"><a href="#例子解读" class="headerlink" title="例子解读"></a>例子解读</h4><p>实例一：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  value: <span class="number">2</span>,</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//情况1</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.bar()); <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况2</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar)()); <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况3</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar = foo.bar)()); <span class="comment">//1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况4</span></span><br><span class="line"><span class="keyword">var</span> f = foo.bar</span><br><span class="line"><span class="built_in">console</span>.log(f()) <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
 <p>情况1:</p>
 <p>1.MemberExpression为foo.bar</p>
@@ -448,7 +447,10 @@
 <p>同情况1中this的取值，结果为20</p>
 <p>情况3:</p>
 <p>进入函数的执行环境，this开始赋值，参照实例一，结果为10</p>
-<h4 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h4><p>this终于清晰明了了起来。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>this终于清晰明了了起来。对于执行函数，关注MemberExpression返回是否是Reference类型，类型的base值即可，而全局情况下，关注是否是严格模式即可。</p>
+<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><p>1.<a href="http://www.ecma-international.org/ecma-262/6.0/#sec-function-calls" target="_blank" rel="noopener">http://www.ecma-international.org/ecma-262/6.0/#sec-function-calls</a></p>
+<p>2.<a href="http://perfectionkills.com/know-thy-reference/" target="_blank" rel="noopener">http://perfectionkills.com/know-thy-reference/</a></p>
+<p>3.<a href="https://github.com/mqyqingfeng/Blog/issues/7" target="_blank" rel="noopener">https://github.com/mqyqingfeng/Blog/issues/7</a></p>
 
       
     </div>
@@ -473,8 +475,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/29/一道JS题引发的思考/" rel="next" title="一道JS题引发的思考">
-                <i class="fa fa-chevron-left"></i> 一道JS题引发的思考
+              <a href="/2018/06/03/JS系列（六）闭包/" rel="next" title="JS系列（六）闭包">
+                <i class="fa fa-chevron-left"></i> JS系列（六）闭包
               </a>
             
           </div>
@@ -483,8 +485,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/03/JS系列（六）闭包/" rel="prev" title="JS系列（六）闭包">
-                JS系列（六）闭包 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/29/设计模式之观察者模式/" rel="prev" title="设计模式之观察者模式">
+                设计模式之观察者模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -622,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、从规范看this"><span class="nav-number">1.</span> <span class="nav-text">一、从规范看this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、相关概念方法"><span class="nav-number">2.</span> <span class="nav-text">三、相关概念方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、例子解读"><span class="nav-number">3.</span> <span class="nav-text">五、例子解读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、总结"><span class="nav-number">4.</span> <span class="nav-text">六、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#从规范看this"><span class="nav-number">1.</span> <span class="nav-text">从规范看this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前提准备"><span class="nav-number">2.</span> <span class="nav-text">前提准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关概念方法"><span class="nav-number">3.</span> <span class="nav-text">相关概念方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子解读"><span class="nav-number">4.</span> <span class="nav-text">例子解读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
