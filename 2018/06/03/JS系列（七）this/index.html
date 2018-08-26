@@ -105,17 +105,19 @@
 
 
 
-<meta name="description" content="####">
+<meta name="description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS系列（七）this">
 <meta property="og:url" content="http://yoursite.com/2018/06/03/JS系列（七）this/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="####">
+<meta property="og:description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-22T07:08:36.281Z">
+<meta property="og:image" content="http://yoursite.com/images/reference.png">
+<meta property="og:updated_time" content="2018-08-26T13:12:48.138Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（七）this">
-<meta name="twitter:description" content="####">
+<meta name="twitter:description" content="一、从规范看this陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。 ####二、前提准备 这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即">
+<meta name="twitter:image" content="http://yoursite.com/images/reference.png">
 
 
 
@@ -356,7 +358,97 @@
       
 
       
-        <p>#### </p>
+        <h4 id="一、从规范看this"><a href="#一、从规范看this" class="headerlink" title="一、从规范看this"></a>一、从规范看this</h4><p>陆陆续续看了好多关于this的文章，很多讲从几种不同场景来得出this的值，但是只是能记住，不了解根本是从何而来。无意看到一篇从ECMAScript规范来讲解this的角度，从根本来看this，顿时清醒起来。所以这篇尝试从规范来解读this。</p>
+<p>####二、前提准备</p>
+<p>这里主要是说明，在什么情况下我们需要对this赋值，有两种情况，一种是全局代码，在执行环境做全局环境准备工作时，即将this赋值；第二种情况是函数，在调用函数，函数的执行环境会对函数里的this赋值。</p>
+<p>第一种，全局代码的this取值不在严格模式下，值为全局对象，在严格模式下，值为undefined；第二种情况较复杂，所以我们这里主要讲在函数调用时，如何确定函数内this的值；</p>
+<h4 id="三、相关概念方法"><a href="#三、相关概念方法" class="headerlink" title="三、相关概念方法"></a>三、相关概念方法</h4><p>在正式拿出规范代码之前，我们先看几个有关联的概念和方法：</p>
+<p>1.Type</p>
+<p>在ECMAScript规范中，算法操作所产生的值都有与之相关联的类型。在规范中，将值类型分为了语言类型和规范类型，语言类型就是我们平时接触的所有类型（null、undefined、Object、String、Number），规范类型我理解为内部的机制，用来在底层辅助语言的行为逻辑。</p>
+<p>Type(x)用作表示x的类型的简写。</p>
+<p>2.Reference</p>
+<p>在this的计算过程中，Reference类型起很大的帮助</p>
+<blockquote>
+<p>The Reference type is used to explain the behaviour of such operators as <code>delete</code>, <code>typeof</code>, the assignment operators, the <code>super</code> keyword and other language features. </p>
+</blockquote>
+<p>Reference类型是用来解释删除、typeof、赋值运算符等。Reference由三部分组成：</p>
+<ul>
+<li>base Value</li>
+<li>referenced name</li>
+<li>strict reference flag</li>
+</ul>
+<p>base Value：属性所在的对象或者environment record，值可以为undefined、Object、Boolean、String、Symbol、Number、Environment Record；</p>
+<p>referenced name：正在解析的标识符或者属性的名字；</p>
+<p>strict reference flag：用来表示是否处于严格模式；</p>
+<p>举个栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo.bar();</span><br><span class="line"></span><br><span class="line"><span class="comment">//foo.bar对应的Reference类型</span></span><br><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">  base : foo,</span><br><span class="line">  name: <span class="string">"bar"</span>,</span><br><span class="line">  strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.IsPropertyReference()</p>
+<blockquote>
+<p>Returns true if either the base value is an object or HasPrimitiveBase(V) is <strong>true</strong>; otherwise returns false.</p>
+</blockquote>
+<p>用来表示Reference类型base的值是否是对象</p>
+<p>4.GetBase</p>
+<blockquote>
+<p>Returns the base value component of the reference V.</p>
+</blockquote>
+<p>返回Reference类型对应的base值</p>
+<p>####四、规范解读</p>
+<p>关于函数调用时this的取值，定位到规范中函数调用部分，摘出关于this的几个步骤：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>Let ref be the result <span class="keyword">of</span> evaluating MemberExpression.</span><br><span class="line"><span class="number">2.</span>If Type(ref) is Reference, then </span><br><span class="line">	a.If IsPropertyReference(ref) is <span class="literal">true</span>,then</span><br><span class="line">		i.Let thisValue be GetThisValue(ref)	<span class="comment">//GetBase</span></span><br><span class="line">	b.Else,the base <span class="keyword">of</span> ref is an Environment Record</span><br><span class="line">    	i.Let refEnv be GetBase(ref)</span><br><span class="line">		ii.Let thisValue be refEnv.WithBaseObject().</span><br><span class="line"><span class="number">3.</span>Else Type(ref) is not Reference,</span><br><span class="line">  	a.Let thisValue be <span class="literal">undefined</span>.</span><br></pre></td></tr></table></figure>
+<p>第一步，让ref为计算MemberExpression的结果</p>
+<p>首先，什么是MemberExpression，看规范：</p>
+<p>MemberExpression：</p>
+<ul>
+<li>PrimaryExpression ()  //普通表达式</li>
+<li>MemberExpression[Expression] //属性表达式</li>
+<li>MemberExpression.IdentifierName //属性访问表达式</li>
+<li>new MemberExpression //创建对象表达式</li>
+</ul>
+<p>可以理解MemberExpression为函数调用()左边的部分。</p>
+<p>第一步：要知道MemberExpression表达式返回的类型，拿属性表达式来举例：</p>
+<blockquote>
+<p>MemberExpression : MemberExpression <code>[</code> Expression <code>]</code></p>
+<p>Return a value of type <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-reference-specification-type" target="_blank" rel="noopener">Reference</a> whose base value is <em>bv</em> and whose referenced name is <em>propertyKey</em>, and whose strict reference flag is <em>strict</em>.</p>
+</blockquote>
+<p>从规范可以看出来返回的是Reference类型。</p>
+<p>不同表达式会返回不同类型，这里有一个其他网站给出的一个备忘单，罗列了大多数情况：</p>
+<p><img src="/images/reference.png" alt=""></p>
+<p>第二步：如果计算MemberExpression的结果为Reference类型，并且Reference类型base的值为对象，this为GetThisValue(ref)的值，这是Es6封了一层，GetThisValue(ref)就是返回GetBase(ref)，所以此时this为Reference类型的base值；如果Reference类型base的值为Environment Record，则返回refEnv.WithBaseObject()。</p>
+<blockquote>
+<p>WithBaseObjec()</p>
+<p>If this Environment Record is associated with a <code>with</code> statement, return the with object. Otherwise, return undefined.</p>
+</blockquote>
+<p>从规范可看出，refEnv.WithBaseObject()会返回undefined.</p>
+<p>所以第二步简而言之，如果返回Reference类型base的值为对象，this为GetBase(ref)，否则为undefied。</p>
+<p>第三步：如果计算MemberExpression的结果不为Reference类型，this的值为undefined.</p>
+<h4 id="五、例子解读"><a href="#五、例子解读" class="headerlink" title="五、例子解读"></a>五、例子解读</h4><p>实例一：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  value: <span class="number">2</span>,</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//情况1</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.bar()); <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况2</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar)()); <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况3</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar = foo.bar)()); <span class="comment">//1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//情况4</span></span><br><span class="line"><span class="keyword">var</span> f = foo.bar</span><br><span class="line"><span class="built_in">console</span>.log(f()) <span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<p>情况1:</p>
+<p>1.MemberExpression为foo.bar</p>
+<p>2.返回的结果为reference</p>
+<p>3.Reference对象为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">	base: foo,</span><br><span class="line">	name: <span class="string">"bar"</span>,</span><br><span class="line">	strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.GetBase()值为foo，是一个对象，所以this值为foo，即结果为2.</p>
+<p>情况2:</p>
+<p>从给出的备忘图可以看出，与情况一一样处理，最后结果为2.</p>
+<p>情况3:</p>
+<p>1.MemberExpression为foo.bar = foo.bar</p>
+<p>2.返回的结果不为reference类型，this值在非严格模式下为window，即结果为1。</p>
+<p>情况4:</p>
+<p>1.MemberExpression为f</p>
+<p>2.返回的结果为reference</p>
+<p>3.Reference对象为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Reference = &#123;</span><br><span class="line">	base: Environment Record,</span><br><span class="line">	name: <span class="string">"bar"</span>,</span><br><span class="line">	strict: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.返回Reference类型base的值不为对象，则返回undefined，非严格模式this为window，即结果为1。</p>
+<p>实例二：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a: <span class="number">10</span>,</span><br><span class="line">  	b: <span class="keyword">this</span>.a + <span class="number">20</span>,</span><br><span class="line">	c: &#123;</span><br><span class="line">		d:<span class="keyword">this</span>.a</span><br><span class="line">	&#125;,</span><br><span class="line">    fn: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//情况1</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.c); </span><br><span class="line"></span><br><span class="line"><span class="comment">//情况2</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.b.d)</span><br><span class="line"><span class="comment">//情况3</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.fn());</span><br></pre></td></tr></table></figure>
+<p>情况1:</p>
+<p>此时this取的是执行环境中this的值，为全局的window，所以obj.c为40。</p>
+<p>情况2:</p>
+<p>同情况1中this的取值，结果为20</p>
+<p>情况3:</p>
+<p>进入函数的执行环境，this开始赋值，参照实例一，结果为10</p>
+<h4 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h4><p>this终于清晰明了了起来。</p>
 
       
     </div>
@@ -448,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -511,6 +612,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、从规范看this"><span class="nav-number">1.</span> <span class="nav-text">一、从规范看this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、相关概念方法"><span class="nav-number">2.</span> <span class="nav-text">三、相关概念方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、例子解读"><span class="nav-number">3.</span> <span class="nav-text">五、例子解读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、总结"><span class="nav-number">4.</span> <span class="nav-text">六、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
