@@ -105,17 +105,17 @@
 
 
 
-<meta name="description" content="一、闭包是什么闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，">
+<meta name="description" content="前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。 进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程：包含了上下文切换对程序执行时间的总和=CPU加载上下文+CPU执行+">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS系列（六）闭包">
-<meta property="og:url" content="http://yoursite.com/2018/06/03/JS系列（六）闭包/index.html">
+<meta property="og:title" content="JS系列（八）事件循环">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/JS系列（八）事件循环/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="一、闭包是什么闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，">
+<meta property="og:description" content="前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。 进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程：包含了上下文切换对程序执行时间的总和=CPU加载上下文+CPU执行+">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-02T13:40:20.339Z">
+<meta property="og:updated_time" content="2018-12-12T05:58:16.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS系列（六）闭包">
-<meta name="twitter:description" content="一、闭包是什么闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，">
+<meta name="twitter:title" content="JS系列（八）事件循环">
+<meta name="twitter:description" content="前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。 进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程：包含了上下文切换对程序执行时间的总和=CPU加载上下文+CPU执行+">
 
 
 
@@ -145,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/03/JS系列（六）闭包/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/JS系列（八）事件循环/"/>
 
 
 
 
 
-  <title>JS系列（六）闭包 | 草丛小精灵</title>
+  <title>JS系列（八）事件循环 | 草丛小精灵</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/03/JS系列（六）闭包/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/JS系列（八）事件循环/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="草丛小精灵">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JS系列（六）闭包</h1>
+          <h1 class="post-title" itemprop="name headline">JS系列（八）事件循环</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T14:13:50+08:00">
-                2018-06-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T21:13:50+08:00">
+                2018-08-26
               </time>
             
 
@@ -316,8 +316,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/06/03/JS系列（六）闭包/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/03/JS系列（六）闭包/" itemprop="commentCount"></span>
+                <a href="/2018/08/26/JS系列（八）事件循环/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/26/JS系列（八）事件循环/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -325,7 +325,7 @@
 
           
           
-             <span id="/2018/06/03/JS系列（六）闭包/" class="leancloud_visitors" data-flag-title="JS系列（六）闭包">
+             <span id="/2018/08/26/JS系列（八）事件循环/" class="leancloud_visitors" data-flag-title="JS系列（八）事件循环">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -356,19 +356,100 @@
       
 
       
-        <h4 id="一、闭包是什么"><a href="#一、闭包是什么" class="headerlink" title="一、闭包是什么"></a>一、闭包是什么</h4><p>闭包是啥，“函数能够访问到自由变量”。即函数能够访问到既不是函数内部定义的变量，也不是参数的变量。从这个定义上来说，所有函数都是闭包，《js权威指南》这样讲到。那我们实际中说到的闭包是什么呢？实际中是指一种场景，某个函数的执行环境销毁了，但是其他函数还能访问到这个函数的执行环境对应的变量对象，换个方向来说，某个函数执行完，执行环境销毁了，但是有其他函数引用了它执行环境对象的变量对象，所以变量对象还没销毁还能被引用到。就是闭包。</p>
-<h4 id="二、闭包的示例"><a href="#二、闭包的示例" class="headerlink" title="二、闭包的示例"></a>二、闭包的示例</h4><h5 id="1-常犯错误"><a href="#1-常犯错误" class="headerlink" title="1.常犯错误"></a>1.常犯错误</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">big</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> i ;</span><br><span class="line">   <span class="keyword">var</span> array = [];</span><br><span class="line">   <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)&#123;</span><br><span class="line">       array[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="built_in">console</span>.log(i)</span><br><span class="line">       &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    array[<span class="number">1</span>]();</span><br><span class="line">&#125;</span><br><span class="line">big();</span><br></pre></td></tr></table></figure>
-<p>这个例子，记忆深刻，在一开始学习JavaScript，自己做小例子的时候就遇到过，那时候一脸懵逼。当时是通过另一种方式写代码解决了，但是一直隐隐压在我心头，到现在，终于明朗了。解释关键的几步：</p>
-<p>1.执行for语句时结束时，为每个函数赋值，创建函数的[[scope]]</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> ECStack = [</span><br><span class="line">   		bigContext,</span><br><span class="line">        globalContext</span><br><span class="line">    ];</span><br><span class="line">bigContext = &#123;</span><br><span class="line">  VO:&#123;</span><br><span class="line">  	<span class="built_in">arguments</span>:&#123;&#125;,</span><br><span class="line">    i:<span class="number">3</span>,</span><br><span class="line">    array:[<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;]</span><br><span class="line">  	&#125;</span><br><span class="line">   scope:[VO,globalContext.VO],</span><br><span class="line">&#125;</span><br><span class="line">  <span class="comment">//定义了array里每个函数的作用域链</span></span><br><span class="line">  array[i][[scope]]=[bigContext.VO,globalContext.VO];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.执行<code>array[1]();</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bigContext = &#123;</span><br><span class="line">  VO:&#123;</span><br><span class="line">  	<span class="built_in">arguments</span>:&#123;&#125;,</span><br><span class="line">  &#125;</span><br><span class="line">   scope:[VO,bigContext.VO,globalContext.VO]</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>打印i的时候，对应的VO里面没有值，去bigContext里找，对应的i已经成了3。所以执行array[i]都是找的bigCOntext.VO里的i，即都是3。</p>
-<h4 id="三、闭包的用途"><a href="#三、闭包的用途" class="headerlink" title="三、闭包的用途"></a>三、闭包的用途</h4><p>1.闭包，每次说起闭包，就会想起java里的私有变量。java里会通过返回函数来让外部函数调用到本不可以调用到的私有变量。而JS的闭包也很像，可以通过返回函数来调用到本不可以调用到的局部变量；</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animals</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">var</span> printN = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(n)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> printN</span><br><span class="line">&#125;</span><br><span class="line">Animals()(); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
-<p>2.更新，之前理解的是错的，之前更多的想到闭包是为了安全性，现在想来，安全个啥，执行环境销毁了变量都一直在。今天得知，闭包是为了在JS里实现<strong>静态变量</strong>的效果。在其他语言比如C语言可以通过static关键字实现，但是JS里如果要让一个变量实现静态变量的效果，让变量一直存在内存区中，只有通过闭包来实现了。那全局变量也能实现一直在内存区啊，这就是作用域不同了。全局变量作用域整个工程，而程序很多地方只是这个文件，或者这几个方法需要共享这个变量，那就可以通过闭包实现了。</p>
-<h4 id="四、闭包的缺点"><a href="#四、闭包的缺点" class="headerlink" title="四、闭包的缺点"></a>四、闭包的缺点</h4><p>1.既然执行环境销毁了变量还在，那缺点很明显了，占用内存！</p>
-<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>闭包理解起来就是这么简单，后续遇到好的例子或者用途，持续更新。</p>
+        <h4 id="前提概要"><a href="#前提概要" class="headerlink" title="前提概要"></a>前提概要</h4><p>JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。</p>
+<h4 id="进程线程"><a href="#进程线程" class="headerlink" title="进程线程"></a>进程线程</h4><p>关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述：</p>
+<p>进程：包含了上下文切换对程序执行时间的总和=CPU加载上下文+CPU执行+CPU保存上下文；</p>
+<p>线程：CPU执行的时间段；</p>
+<p>再结合网上生动的比喻，把进程比喻为工厂，线程比喻为工人：</p>
+<ul>
+<li>进程是一个工厂，工厂有它的独立资源</li>
+<li>工厂之间相互独立</li>
+<li>线程是工厂中的工人，多个工人协作完成任务</li>
+<li>工厂内有一个或多个工人</li>
+<li>工人之间共享空间</li>
+</ul>
+<p>进行类比</p>
+<ul>
+<li>工厂的资源——&gt; 系统分配的内存（独立的一块内存），CPU加载上下文</li>
+<li>工厂之间相互独立——&gt; 进程之间相互独立，上下文各个程序都不同</li>
+<li>多个工人协作完成任务——&gt; 多个线程在进程中协作完成任务，CPU执行</li>
+<li>工厂内有一个或多个工人——&gt; 一个进程由一个或多个线程组成</li>
+<li>工人之间共享空间——&gt; 同一进程下各个线程共享内存空间（代码段、数据集、堆等），都在一个上下文里。</li>
+</ul>
+<p>然后进程线程的显著特点：</p>
+<p>   a. 进程是cpu资源分配的最小单位（是能拥有资源和独立运行的最小单位，cpu加载上下文）</p>
+<p>   b. 线程是cpu调度的最小单位（cpu运行的最小单位，CPU执行）</p>
+<p>我们可以打开任务管理器看看我们电脑的进程：</p>
+<p>####浏览器进程</p>
+<p>接下来简单讲我们的浏览器进程，浏览器是多进程的，我们先来看浏览器有哪些进程，主要说四个进程：</p>
+<p>1.Brower进程：浏览器的主进程，只有一个，负责协调、主控、各个页面的管理、创建和销毁其他进程、网络资源的管理、下载等</p>
+<p>2.浏览器渲染进程：内部多线程，包括了JS引擎线程、GUI渲染线程、异步http请求线程等；（每打开一个tab页可以理解开了一个渲染进程，但不绝对）</p>
+<p>3.第三方插件进程：每个插件对应了一个进程；</p>
+<p>4.GPU进程：用于3D绘制，（复合图层，硬件加速）</p>
+<p>浏览器每打开一个tab页会另开进程，这么做可以理解是通过资源来换取浏览器的稳定。</p>
+<h4 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h4><p>从上面简单的进程介绍，可以看出，和我们关联最多的是浏览器渲染进程，为什么渲染进程会包含多线程呢，webkit内幕解释是为了不让其它操作阻止渲染线程的快速执行，现在我们来看它里面包含了哪些线程，来为我们越来越庞大的前端项目服务：</p>
+<p>1.GUI渲染线程</p>
+<ul>
+<li>渲染浏览器界面、解析HTML、CSS，构建DOM等、布局和绘制</li>
+<li>当界面需要重绘时，执行该线程</li>
+</ul>
+<p>2.JS引擎线程</p>
+<ul>
+<li>我们说的js内核，处理运行JS代码（V8引擎、JavaScriptCore）</li>
+<li>JS引擎一直在等待任务队列里任务到来，然后加以处理，一个tab页始终只有一个js引擎线程，也就是我们平常说的javascript代码执行都是单线程。</li>
+<li>JS引擎线程和GUI渲染线程互斥，因为都有可能操作dom，那么JS执行过长就会导致页面阻塞，所以开发中还是尽可能注意JS的性能。</li>
+</ul>
+<p>3.事件触发线程</p>
+<ul>
+<li>JS引擎线程就一个在运行代码，没有精力去管理事件任务队列，所以需要浏览器辅助开线程管理。</li>
+<li>当遇到事件、用户交互、渲染、网络请求等，会讲对应任务添加到事件线程中</li>
+<li>当对应事件符合条件该被触发时，线程将事件或者回调添加到待处理队列的队尾，等待JS引擎处理（JS引擎单线程，这些事件都处于排队状态）</li>
+</ul>
+<p>4.定时器触发线程</p>
+<ul>
+<li>用来计时，计时完毕后添加到对应的任务队列里</li>
+<li>不一定时间准确，因为只是时间到了，放到了任务队列里而已</li>
+</ul>
+<p>5.异步http线程</p>
+<ul>
+<li>检测到回调后，放入队列进行处理</li>
+</ul>
+<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><p>​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。</p>
+<p>​    每个浏览上下文都有一个事件循环，一个事件循环有一个或多个任务队列，任务队列是一个有序的任务列表，用来响应下面的操作：</p>
+<ul>
+<li><p>事件</p>
+</li>
+<li><p>解析</p>
+</li>
+<li><p>回调</p>
+</li>
+<li><p>使用资源</p>
+</li>
+<li><p>响应DOM操作</p>
+<p>每个任务都对应了一个任务源，任务源相同的任务都放在一个任务队列里，不同的任务源放在不同的任务队列里。这样做的好处时，当JS引擎空闲，可以决定高优先级处理用户交互类的任务队列。</p>
+</li>
+</ul>
+<h4 id="事件循环相关概念"><a href="#事件循环相关概念" class="headerlink" title="事件循环相关概念"></a>事件循环相关概念</h4><p>1.执行栈</p>
+<p>2.异步任务同步任务</p>
+<p>3.任务、微任务</p>
+<h4 id="事件循环执行步骤"><a href="#事件循环执行步骤" class="headerlink" title="事件循环执行步骤"></a>事件循环执行步骤</h4><p>1.从选中的任务队列里选出最先放进去的任务，如果任务为空，跳到执行微任务的步骤；</p>
+<p>2.将选中的任务设为事件循环当前在运行的任务；</p>
+<p>3.执行该任务；</p>
+<p>4.将事件循环当前在运行的任务置空；</p>
+<p>5.将上一步运行完的任务从任务队列里移除；</p>
+<p>6.进行微任务检查；（后面详细介绍）</p>
+<p>7.页面渲染（会处理滚动条、窗口大小等界面渲染）</p>
+<p>8.回到第一步；</p>
+<h4 id="微任务"><a href="#微任务" class="headerlink" title="微任务"></a>微任务</h4><p>每个事件循环都有一个微任务队列，微任务最初都排在单独的队列，而不是任务队列里。</p>
+<p>微任务执行步骤：</p>
+<p>1.将微任务检查点置为true;</p>
+<p>2.如果事件循环的微任务队列为空，跳到完成（第8步）那一步</p>
+<p>3.挑选出最先放进去的微任务；</p>
+<p>4.将选中的任务设为事件循环当前在运行的任务；</p>
+<p>5.运行选中的微任务；</p>
+<p>6.将事件循环当前运行的任务置空；</p>
+<p>7.从微任务队列中移除上述运行的微任务，跳到第2步；</p>
+<p>8将微任务检查点置为false;</p>
 
       
     </div>
@@ -393,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/29/一道JS题引发的思考/" rel="next" title="一道JS题引发的思考">
-                <i class="fa fa-chevron-left"></i> 一道JS题引发的思考
+              <a href="/2018/08/26/JS系列（七）this/" rel="next" title="JS系列（七）this">
+                <i class="fa fa-chevron-left"></i> JS系列（七）this
               </a>
             
           </div>
@@ -402,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/29/设计模式之观察者模式/" rel="prev" title="设计模式之观察者模式">
-                设计模式之观察者模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -542,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、闭包是什么"><span class="nav-number">1.</span> <span class="nav-text">一、闭包是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、闭包的示例"><span class="nav-number">2.</span> <span class="nav-text">二、闭包的示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-常犯错误"><span class="nav-number">2.1.</span> <span class="nav-text">1.常犯错误</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、闭包的用途"><span class="nav-number">3.</span> <span class="nav-text">三、闭包的用途</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、闭包的缺点"><span class="nav-number">4.</span> <span class="nav-text">四、闭包的缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提概要"><span class="nav-number">1.</span> <span class="nav-text">前提概要</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程线程"><span class="nav-number">2.</span> <span class="nav-text">进程线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染进程"><span class="nav-number">3.</span> <span class="nav-text">渲染进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环"><span class="nav-number">4.</span> <span class="nav-text">事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环相关概念"><span class="nav-number">5.</span> <span class="nav-text">事件循环相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环执行步骤"><span class="nav-number">6.</span> <span class="nav-text">事件循环执行步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#微任务"><span class="nav-number">7.</span> <span class="nav-text">微任务</span></a></li></ol></div>
             
 
           </div>
