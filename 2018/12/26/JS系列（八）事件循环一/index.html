@@ -105,16 +105,17 @@
 
 
 
-<meta name="description" content="我只是一只可爱的小猫咪。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="草丛小精灵">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+<meta name="description" content="一、前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。怕文章篇幅太长，到后面关键的点没讲清楚，所以分成两篇文章来讲。 二、进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS系列（八）事件循环一">
+<meta property="og:url" content="http://yoursite.com/2018/12/26/JS系列（八）事件循环一/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="我只是一只可爱的小猫咪。">
+<meta property="og:description" content="一、前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。怕文章篇幅太长，到后面关键的点没讲清楚，所以分成两篇文章来讲。 二、进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-26T11:54:04.542Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="草丛小精灵">
-<meta name="twitter:description" content="我只是一只可爱的小猫咪。">
+<meta name="twitter:title" content="JS系列（八）事件循环一">
+<meta name="twitter:description" content="一、前提概要JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。怕文章篇幅太长，到后面关键的点没讲清楚，所以分成两篇文章来讲。 二、进程线程关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述： 进程">
 
 
 
@@ -144,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/26/JS系列（八）事件循环一/"/>
 
 
 
 
 
-  <title>归档 | 草丛小精灵</title>
+  <title>JS系列（八）事件循环一 | 草丛小精灵</title>
   
 
 
@@ -169,7 +170,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,411 +254,224 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/26/JS系列（八）事件循环一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="草丛小精灵">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/cat.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="草丛小精灵">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">JS系列（八）事件循环一</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T19:13:50+08:00">
+                2018-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 15 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/26/JS系列（八）事件循环一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/26/JS系列（八）事件循环一/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/2018/12/26/JS系列（八）事件循环一/" class="leancloud_visitors" data-flag-title="JS系列（八）事件循环一">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/26/JS系列（八）事件循环二/" itemprop="url">
-              
-                <span itemprop="name">JS系列（八）事件循环二</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-26T19:33:50+08:00"
-              content="2018-12-26" >
-          12-26
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/26/JS系列（八）事件循环一/" itemprop="url">
-              
-                <span itemprop="name">JS系列（八）事件循环一</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-26T19:13:50+08:00"
-              content="2018-12-26" >
-          12-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/26/JS系列（七）this/" itemprop="url">
-              
-                <span itemprop="name">JS系列（七）this</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-26T21:13:50+08:00"
-              content="2018-08-26" >
-          08-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/12/React常用语法糖解读之extends/" itemprop="url">
-              
-                <span itemprop="name">React常用语法糖解读之extends</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-12T23:30:50+08:00"
-              content="2018-08-12" >
-          08-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h4 id="一、前提概要"><a href="#一、前提概要" class="headerlink" title="一、前提概要"></a>一、前提概要</h4><p>JS事件循环，想写这个篇文档已经很久了，每次看文档都忍不住一直往下看，感觉要说明清楚的话直接从几个任务队列，线程检查来取任务执行很难从根本上理解，所以本文会从浏览器线程进程、任务微任务、主要结合W3C里HTML的规范来讲。怕文章篇幅太长，到后面关键的点没讲清楚，所以分成两篇文章来讲。</p>
+<h4 id="二、进程线程"><a href="#二、进程线程" class="headerlink" title="二、进程线程"></a>二、进程线程</h4><p>关于进程线程的资料很多，取一个我认为较合理的解释，进程线程都是对CPU时间段对描述：</p>
+<p>进程：包含了上下文切换对程序执行时间的总和=CPU加载上下文+CPU执行+CPU保存上下文；</p>
+<p>线程：CPU执行的时间段；</p>
+<p>再结合网上生动的比喻，把进程比喻为工厂，线程比喻为工人：</p>
+<ul>
+<li>进程是一个工厂，工厂有它的独立资源</li>
+<li>工厂之间相互独立</li>
+<li>线程是工厂中的工人，多个工人协作完成任务</li>
+<li>工厂内有一个或多个工人</li>
+<li>工人之间共享空间</li>
+</ul>
+<p>进行类比</p>
+<ul>
+<li>工厂的资源——&gt; 系统分配的内存（独立的一块内存），CPU加载上下文</li>
+<li>工厂之间相互独立——&gt; 进程之间相互独立，上下文各个程序都不同</li>
+<li>多个工人协作完成任务——&gt; 多个线程在进程中协作完成任务，CPU执行</li>
+<li>工厂内有一个或多个工人——&gt; 一个进程由一个或多个线程组成</li>
+<li>工人之间共享空间——&gt; 同一进程下各个线程共享内存空间（代码段、数据集、堆等），都在一个上下文里。</li>
+</ul>
+<p>然后进程线程的显著特点：</p>
+<p>   a. 进程是cpu资源分配的最小单位（是能拥有资源和独立运行的最小单位，cpu加载上下文）</p>
+<p>   b. 线程是cpu调度的最小单位（cpu运行的最小单位，CPU执行）</p>
+<p>我们可以打开任务管理器看看我们电脑的进程：</p>
+<p>####三、浏览器进程</p>
+<p>接下来简单讲我们的浏览器进程，浏览器是多进程的，我们先来看浏览器有哪些进程，主要说四个进程：</p>
+<p>1.Brower进程：浏览器的主进程，只有一个，负责协调、主控、各个页面的管理、创建和销毁其他进程、网络资源的管理、下载等</p>
+<p>2.浏览器渲染进程：内部多线程，包括了JS引擎线程、GUI渲染线程、异步http请求线程等；（每打开一个tab页可以理解开了一个渲染进程，但不绝对）</p>
+<p>3.第三方插件进程：每个插件对应了一个进程；</p>
+<p>4.GPU进程：用于3D绘制，（复合图层，硬件加速）</p>
+<p>浏览器每打开一个tab页会另开进程，这么做可以理解是通过资源来换取浏览器的稳定。</p>
+<h4 id="四、渲染进程"><a href="#四、渲染进程" class="headerlink" title="四、渲染进程"></a>四、渲染进程</h4><p>从上面简单的进程介绍，可以看出，和我们关联最多的是浏览器渲染进程，为什么渲染进程会包含多线程呢，webkit内幕解释是为了不让其它操作阻止渲染线程的快速执行，现在我们来看它里面包含了哪些线程，来为我们越来越庞大的前端项目服务：</p>
+<p>1.GUI渲染线程</p>
+<ul>
+<li>渲染浏览器界面、解析HTML、CSS，构建DOM等、布局和绘制</li>
+<li>当界面需要重绘时，执行该线程</li>
+</ul>
+<p>2.JS引擎线程</p>
+<ul>
+<li>我们说的js内核，处理运行JS代码（V8引擎、JavaScriptCore）</li>
+<li>JS引擎一直在等待任务队列里任务到来，然后加以处理，一个tab页始终只有一个js引擎线程，也就是我们平常说的javascript代码执行都是单线程。</li>
+<li>JS引擎线程和GUI渲染线程互斥，因为都有可能操作dom，那么JS执行过长就会导致页面阻塞，所以开发中还是尽可能注意JS的性能。</li>
+</ul>
+<p>3.事件触发线程</p>
+<ul>
+<li>JS引擎线程就一个在运行代码，没有精力去管理事件任务队列，所以需要浏览器辅助开线程管理。</li>
+<li>当遇到事件、用户交互、渲染、网络请求等，会讲对应任务添加到事件线程中</li>
+<li>当对应事件符合条件该被触发时，线程将事件或者回调添加到待处理队列的队尾，等待JS引擎处理（JS引擎单线程，这些事件都处于排队状态）</li>
+</ul>
+<p>4.定时器触发线程</p>
+<ul>
+<li>用来计时，计时完毕后添加到对应的任务队列里</li>
+<li>不一定时间准确，因为只是时间到了，放到了任务队列里而已</li>
+</ul>
+<p>5.异步http线程</p>
+<ul>
+<li>检测到回调后，放入队列进行处理</li>
+</ul>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>由于JS是单线程的，很多功能依靠单线程无法完成，所以执行JS的环境提供了很多辅助线程来供程序执行。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/React常用语法糖解读之class/" itemprop="url">
-              
-                <span itemprop="name">React常用语法糖解读之class</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T23:30:50+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/29/设计模式之观察者模式/" itemprop="url">
-              
-                <span itemprop="name">设计模式之观察者模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-29T23:30:50+08:00"
-              content="2018-07-29" >
-          07-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/03/JS系列（六）闭包/" itemprop="url">
-              
-                <span itemprop="name">JS系列（六）闭包</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-03T14:13:50+08:00"
-              content="2018-06-03" >
-          06-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/29/一道JS题引发的思考/" itemprop="url">
-              
-                <span itemprop="name">一道JS题引发的思考</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-29T22:42:50+08:00"
-              content="2018-05-29" >
-          05-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/27/JS系列(五)作用域/" itemprop="url">
-              
-                <span itemprop="name">JS系列(五)作用域</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-27T18:46:50+08:00"
-              content="2018-05-27" >
-          05-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/22/JS系列(四)执行环境/" itemprop="url">
-              
-                <span itemprop="name">JS系列(四)执行环境</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-22T22:10:50+08:00"
-              content="2018-05-22" >
-          05-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/JS系列（七）this/" rel="next" title="JS系列（七）this">
+                <i class="fa fa-chevron-left"></i> JS系列（七）this
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/26/JS系列（八）事件循环二/" rel="prev" title="JS系列（八）事件循环二">
+                JS系列（八）事件循环二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -665,6 +479,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -685,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -748,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、前提概要"><span class="nav-number">1.</span> <span class="nav-text">一、前提概要</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、进程线程"><span class="nav-number">2.</span> <span class="nav-text">二、进程线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、渲染进程"><span class="nav-number">3.</span> <span class="nav-text">四、渲染进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">4.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -881,6 +727,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
