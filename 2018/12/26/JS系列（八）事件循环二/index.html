@@ -105,17 +105,19 @@
 
 
 
-<meta name="description" content="一、事件循环​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。 ​    每个浏览上下文（可以理解为一个tab页）都有一个事件循环，一个事件循环有一个或多个任务队列，任务队列是一个有序的任务列表，用来响应下面的操作：  事件  解析  回调  使用资源  响应DOM操作 每个任务都对应了一个任务源，任务">
+<meta name="description" content="疯狂补图中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS系列（八）事件循环二">
 <meta property="og:url" content="http://yoursite.com/2018/12/26/JS系列（八）事件循环二/index.html">
 <meta property="og:site_name" content="草丛小精灵">
-<meta property="og:description" content="一、事件循环​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。 ​    每个浏览上下文（可以理解为一个tab页）都有一个事件循环，一个事件循环有一个或多个任务队列，任务队列是一个有序的任务列表，用来响应下面的操作：  事件  解析  回调  使用资源  响应DOM操作 每个任务都对应了一个任务源，任务">
+<meta property="og:description" content="疯狂补图中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-27T14:51:33.780Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
+<meta property="og:updated_time" content="2019-03-23T14:57:21.457Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（八）事件循环二">
-<meta name="twitter:description" content="一、事件循环​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。 ​    每个浏览上下文（可以理解为一个tab页）都有一个事件循环，一个事件循环有一个或多个任务队列，任务队列是一个有序的任务列表，用来响应下面的操作：  事件  解析  回调  使用资源  响应DOM操作 每个任务都对应了一个任务源，任务">
+<meta name="twitter:description" content="疯狂补图中">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
 
 
 
@@ -356,7 +358,12 @@
       
 
       
-        <h4 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h4><p>​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。</p>
+        <p><img src="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg" alt=""></p>
+<center><strong>疯狂补图中</strong></center>
+
+<a id="more"></a>
+<hr>
+<h4 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h4><p>​    好了，终于到我们的重点了，在js中为什么会有事件循环，为了协调事件、用户交互、script运行、渲染、网络请求等在网页中井然有序的执行。</p>
 <p>​    每个浏览上下文（可以理解为一个tab页）都有一个事件循环，一个事件循环有一个或多个任务队列，任务队列是一个有序的任务列表，用来响应下面的操作：</p>
 <ul>
 <li><p>事件</p>
@@ -368,7 +375,7 @@
 <li><p>使用资源</p>
 </li>
 <li><p>响应DOM操作</p>
-<p>每个任务都对应了一个任务源，任务源相同的任务都放在一个任务队列里，不同的任务源放在不同的任务里。这样做的好处时，当JS引擎空闲，可以决定高优先级处理用户交互类的任务队列。注意，同一个任务队列里执行是按先进先执行，按放进任务队列的顺序，是不同任务队列之间有优先级。规范里</p>
+<p>每个任务都对应了一个任务源，任务源相同的任务都放在一个任务队列里，不同的任务源放在不同的任务里。这样做的好处时，当JS引擎空闲，可以决定高优先级处理用户交互类的任务队列。因为是放任务队列，那么同一个队列里任务执行肯定是先进先出了，这里的优先级是指不同任务队列之间。</p>
 </li>
 </ul>
 <h4 id="二、事件循环相关概念"><a href="#二、事件循环相关概念" class="headerlink" title="二、事件循环相关概念"></a>二、事件循环相关概念</h4><p>1.执行栈</p>
@@ -379,17 +386,35 @@
 <p>3.宏任务、微任务</p>
 <p>​    任务分为宏任务和微任务；</p>
 <p>​    宏任务：全局代码执行首先就是一个宏任务、前面的事件、解析、回调、使用资源、响应DOM操作的执行都是归位宏任务；</p>
-<p>​    微任务：微任务是最初在微任务队列而不是在任务队列上排队的任务，</p>
-<h4 id="三、事件循环执行步骤"><a href="#三、事件循环执行步骤" class="headerlink" title="三、事件循环执行步骤"></a>三、事件循环执行步骤</h4><p>1.从选中的任务队列里选出最先放进去的任务，如果任务为空，跳到执行微任务的步骤；</p>
+<p>​    微任务：微任务是最初在微任务队列而不是在任务队列上排队的任务，现在比较常见的微任务是Promise里的then函数；</p>
+<h4 id="三、事件循环"><a href="#三、事件循环" class="headerlink" title="三、事件循环"></a>三、事件循环</h4><p>我们首先看事件循环的步骤，再添加例子讲解：</p>
+<hr>
+<h5 id="事件循环步骤"><a href="#事件循环步骤" class="headerlink" title="事件循环步骤"></a>事件循环步骤</h5><p>1.从选中的任务队列里选出最先放进去的任务，如果任务为空，跳到执行微任务的步骤；</p>
 <p>2.将选中的任务设为事件循环当前在运行的任务；</p>
-<p>3.执行该任务；</p>
+<p>3.<strong>执行该任务</strong>；</p>
 <p>4.将事件循环当前在运行的任务置空；</p>
 <p>5.将上一步运行完的任务从任务队列里移除；</p>
-<p>6.进行微任务检查；（后面详细介绍）</p>
+<p>6.<strong>进行微任务检查</strong>；（后面详细介绍）</p>
 <p>7.页面渲染（会处理滚动条、窗口大小等界面渲染）</p>
 <p>8.回到第一步；</p>
-<h4 id="四、微任务"><a href="#四、微任务" class="headerlink" title="四、微任务"></a>四、微任务</h4><p>每个事件循环都有一个微任务队列，微任务最初都排在单独的队列，而不是任务队列里。</p>
-<p>微任务执行步骤：</p>
+<hr>
+<h5 id="事件循环例子"><a href="#事件循环例子" class="headerlink" title="事件循环例子"></a>事件循环例子</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
+<p>可以先在看解析前自己测试下输出顺序。</p>
+<ul>
+<li>首先，全局代码开始执行，当前任务队列为空，全局代码为宏任务开始执行</li>
+<li>执行第一行输出，执行第二行，产生了一个宏任务，放入setTimeout为任务源的任务队列A里</li>
+<li>执行到第5行，产生了同一个源的宏任务，放入到A任务队列里</li>
+<li>执行到8行，产生了一个setImmediate的宏任务，放入setImmediate为任务源的任务队列B里</li>
+<li>最后一行，全局代码宏任务结束，输出</li>
+<li>开始事件循环，因为setImmediate的优先级比setTimeout高，选中setImmediate任务队列里最先放进去的任务，执行输出setImmediate1</li>
+<li>执行完将任务从任务队列里移除，现在还有setTimeout队列，选中执行最先放进去的任务输出setTimeout1，依次按步骤判断执行</li>
+</ul>
+<p>最后输出的是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script start</span><br><span class="line">script end</span><br><span class="line">setImmediate1</span><br><span class="line">setTimeout1</span><br><span class="line">setTimeout2</span><br></pre></td></tr></table></figure>
+<h4 id="四、微任务"><a href="#四、微任务" class="headerlink" title="四、微任务"></a>四、微任务</h4><p>上面事件循环的第6步就是执行这个宏任务产生的微任务。</p>
+<p>每个事件循环都有一个微任务队列，微任务最初都排在单独的队列，而不是任务队列里。</p>
+<hr>
+<p>#####微任务执行步骤：</p>
 <p>1.将微任务检查点置为true;</p>
 <p>2.如果事件循环的微任务队列为空，跳到完成（第8步）那一步</p>
 <p>3.挑选出最先放进去的微任务；</p>
@@ -398,6 +423,19 @@
 <p>6.将事件循环当前运行的任务置空；</p>
 <p>7.从微任务队列中移除上述运行的微任务，跳到第2步；</p>
 <p>8将微任务检查点置为false;</p>
+<hr>
+<p>举个阮老师在推特上放的题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">t</span> =&gt;</span> <span class="built_in">console</span>.log(t));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>借助上面介绍的步骤，也可以尝试自己输出结果解析。</p>
+<ul>
+<li><p>首先执行Promise里的代码，resolve1，回调返回了，promise的回调产生的是一个微任务，所以微任务队列里加了一个微任务<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ 执行第3句，又在微任务队列里加了个微任务```console.log(2)</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>执行到底4句，输出4</p>
+</li>
+<li>执行到最后一句输出3</li>
+</ul>
+<p>所以最后输出到顺序是4 3 1 2</p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>执行完一个宏任务，会立即执行这个宏任务里产生的微任务，才会开始下一个宏任务。</p>
 
       
     </div>
@@ -571,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件循环"><span class="nav-number">1.</span> <span class="nav-text">一、事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、事件循环相关概念"><span class="nav-number">2.</span> <span class="nav-text">二、事件循环相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、事件循环执行步骤"><span class="nav-number">3.</span> <span class="nav-text">三、事件循环执行步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、微任务"><span class="nav-number">4.</span> <span class="nav-text">四、微任务</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件循环"><span class="nav-number">1.</span> <span class="nav-text">一、事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、事件循环相关概念"><span class="nav-number">2.</span> <span class="nav-text">二、事件循环相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、事件循环"><span class="nav-number">3.</span> <span class="nav-text">三、事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环步骤"><span class="nav-number">3.1.</span> <span class="nav-text">事件循环步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环例子"><span class="nav-number">3.2.</span> <span class="nav-text">事件循环例子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、微任务"><span class="nav-number">4.</span> <span class="nav-text">四、微任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
             
 
           </div>
