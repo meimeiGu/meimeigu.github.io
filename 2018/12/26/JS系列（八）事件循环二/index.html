@@ -113,7 +113,7 @@
 <meta property="og:description" content="疯狂补图中">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
-<meta property="og:updated_time" content="2019-03-23T14:57:21.457Z">
+<meta property="og:updated_time" content="2019-03-23T15:02:08.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（八）事件循环二">
 <meta name="twitter:description" content="疯狂补图中">
@@ -414,8 +414,7 @@
 <h4 id="四、微任务"><a href="#四、微任务" class="headerlink" title="四、微任务"></a>四、微任务</h4><p>上面事件循环的第6步就是执行这个宏任务产生的微任务。</p>
 <p>每个事件循环都有一个微任务队列，微任务最初都排在单独的队列，而不是任务队列里。</p>
 <hr>
-<p>#####微任务执行步骤：</p>
-<p>1.将微任务检查点置为true;</p>
+<h5 id="微任务执行步骤："><a href="#微任务执行步骤：" class="headerlink" title="微任务执行步骤："></a>微任务执行步骤：</h5><p>1.将微任务检查点置为true;</p>
 <p>2.如果事件循环的微任务队列为空，跳到完成（第8步）那一步</p>
 <p>3.挑选出最先放进去的微任务；</p>
 <p>4.将选中的任务设为事件循环当前在运行的任务；</p>
@@ -424,8 +423,7 @@
 <p>7.从微任务队列中移除上述运行的微任务，跳到第2步；</p>
 <p>8将微任务检查点置为false;</p>
 <hr>
-<p>举个阮老师在推特上放的题：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">t</span> =&gt;</span> <span class="built_in">console</span>.log(t));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="举个阮老师在推特上放的题："><a href="#举个阮老师在推特上放的题：" class="headerlink" title="举个阮老师在推特上放的题："></a>举个阮老师在推特上放的题：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">    resolve(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">t</span> =&gt;</span> <span class="built_in">console</span>.log(t));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
 <p>借助上面介绍的步骤，也可以尝试自己输出结果解析。</p>
 <ul>
 <li><p>首先执行Promise里的代码，resolve1，回调返回了，promise的回调产生的是一个微任务，所以微任务队列里加了一个微任务<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ 执行第3句，又在微任务队列里加了个微任务```console.log(2)</span><br></pre></td></tr></table></figure></p>
@@ -609,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件循环"><span class="nav-number">1.</span> <span class="nav-text">一、事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、事件循环相关概念"><span class="nav-number">2.</span> <span class="nav-text">二、事件循环相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、事件循环"><span class="nav-number">3.</span> <span class="nav-text">三、事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环步骤"><span class="nav-number">3.1.</span> <span class="nav-text">事件循环步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环例子"><span class="nav-number">3.2.</span> <span class="nav-text">事件循环例子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、微任务"><span class="nav-number">4.</span> <span class="nav-text">四、微任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、事件循环"><span class="nav-number">1.</span> <span class="nav-text">一、事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、事件循环相关概念"><span class="nav-number">2.</span> <span class="nav-text">二、事件循环相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、事件循环"><span class="nav-number">3.</span> <span class="nav-text">三、事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环步骤"><span class="nav-number">3.1.</span> <span class="nav-text">事件循环步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事件循环例子"><span class="nav-number">3.2.</span> <span class="nav-text">事件循环例子</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、微任务"><span class="nav-number">4.</span> <span class="nav-text">四、微任务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#微任务执行步骤："><span class="nav-number">4.1.</span> <span class="nav-text">微任务执行步骤：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#举个阮老师在推特上放的题："><span class="nav-number">4.2.</span> <span class="nav-text">举个阮老师在推特上放的题：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
             
 
           </div>
