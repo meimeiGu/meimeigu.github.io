@@ -113,7 +113,7 @@
 <meta property="og:description" content="疯狂补图中">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
-<meta property="og:updated_time" content="2019-03-23T15:06:08.673Z">
+<meta property="og:updated_time" content="2019-03-23T15:07:33.174Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（八）事件循环二">
 <meta name="twitter:description" content="疯狂补图中">
@@ -401,16 +401,12 @@
 <h5 id="事件循环例子"><a href="#事件循环例子" class="headerlink" title="事件循环例子"></a>事件循环例子</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
 <p>可以先在看解析前自己测试下输出顺序。</p>
 <ul>
-<li>首先，全局代码开始执行，当前任务队列为空，全局代码为宏任务开始执行</li>
-<li>执行第一行输出，执行第二行，产生了一个宏任务，放入setTimeout为任务源的任务队列A里</li>
-<li>执行到第5行，产生了同一个源的宏任务，放入到A任务队列里</li>
-<li>执行到8行，产生了一个setImmediate的宏任务，放入setImmediate为任务源的任务队列B里</li>
-<li>最后一行，全局代码宏任务结束，输出</li>
-<li>开始事件循环，因为setImmediate的优先级比setTimeout高，选中setImmediate任务队列里最先放进去的任务，执行输出setImmediate1</li>
-<li>执行完将任务从任务队列里移除，现在还有setTimeout队列，选中执行最先放进去的任务输出setTimeout1，依次按步骤判断执行</li>
+<li>首先，全局代码开始执行，当前任务队列为空，全局代码为宏任务开始执行；</li>
+<li>执行第一行输出，执行第二行，产生了一个宏任务，放入setTimeout为任务源的任务队列A里；</li>
+<li>执行到第5行，产生了同一个源的宏任务，放入到A任务队列里；</li>
+<li>执行到8行，产生了一个setImmediate的宏任务，放入setImmediate为任务源的任务队列B里；</li>
+<li>最后一行，全局代码宏任务结束，输出<figure class="highlight plain"><figcaption><span>end```;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+ 开始事件循环，因为setImmediate的优先级比setTimeout高，选中setImmediate任务队列里最先放进去的任务，执行输出setImmediate1；</span><br><span class="line">+ 执行完将任务从任务队列里移除，现在还有setTimeout队列，选中执行最先放进去的任务输出setTimeout1，依次按步骤判断执行；</span><br><span class="line"></span><br><span class="line">最后输出的是：</span><br><span class="line"></span><br><span class="line">```Js</span><br><span class="line">script start</span><br><span class="line">script end</span><br><span class="line">setImmediate1</span><br><span class="line">setTimeout1</span><br><span class="line">setTimeout2</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>最后输出的是：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script start</span><br><span class="line">script end</span><br><span class="line">setImmediate1</span><br><span class="line">setTimeout1</span><br><span class="line">setTimeout2</span><br></pre></td></tr></table></figure>
 <h4 id="四、微任务"><a href="#四、微任务" class="headerlink" title="四、微任务"></a>四、微任务</h4><p>上面事件循环的第6步就是执行这个宏任务产生的微任务。</p>
 <p>每个事件循环都有一个微任务队列，微任务最初都排在单独的队列，而不是任务队列里。</p>
 <hr>
@@ -428,10 +424,10 @@
 <ul>
 <li>首先执行Promise里的代码，resolve1，回调返回了，promise的回调产生的是一个微任务，所以微任务队列里加了一个微任务<code>console.log(1)</code>;</li>
 <li>执行第3句，又在微任务队列里加了个微任务<code>console.log(2)</code>;</li>
-<li>执行到底4句，输出4</li>
-<li>执行到最后一句输出3</li>
+<li>执行到底4句，输出4；</li>
+<li>执行到最后一句输出3；</li>
 </ul>
-<p>所以最后输出到顺序是4 3 1 2</p>
+<p>所以最后输出到顺序是4 3 1 2。</p>
 <h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>执行完一个宏任务，会立即执行这个宏任务里产生的微任务，才会开始下一个宏任务。</p>
 
       
