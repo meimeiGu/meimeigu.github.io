@@ -113,7 +113,8 @@
 <meta property="og:description" content="疯狂补图中">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
-<meta property="og:updated_time" content="2019-03-23T15:11:40.001Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1f02uf540j30gp0endg6.jpg">
+<meta property="og:updated_time" content="2019-03-25T06:22:41.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（八）事件循环二">
 <meta name="twitter:description" content="疯狂补图中">
@@ -385,8 +386,11 @@
 <p>​    异步任务：发出调用后，由被调用者通过状态、通知来通知调用者，或通过回调函数处理这个调用；在js执行里可以理解多个task可以同时执行。</p>
 <p>3.宏任务、微任务</p>
 <p>​    任务分为宏任务和微任务；</p>
-<p>​    宏任务：全局代码执行首先就是一个宏任务、前面的事件、解析、回调、使用资源、响应DOM操作的执行都是归位宏任务；</p>
+<p>​    宏任务：全局代码执行首先就是一个宏任务、前面的事件、解析、回调、使用资源、响应DOM操作的执行都是归为宏任务；</p>
 <p>​    微任务：微任务是最初在微任务队列而不是在任务队列上排队的任务，现在比较常见的微任务是Promise里的then函数；</p>
+<p>4.图解</p>
+<p><img src="http://ww1.sinaimg.cn/large/005AkzRvly1g1f02uf540j30gp0endg6.jpg" alt=""></p>
+<p>这是网上找的图，可以首先有对事件循环有一个感性认识，执行代码的过程中，将这些ajax请求、定时器产生这些异步任务的回调放在了一个队列里，待当前宏任务执行完了之后，再拿下一段宏任务。宏任务其实就是一段代码，所以可以看着Js引擎在等着执行代码，执行完了一段，从队列里拿下一段，周而复始。</p>
 <h4 id="三、事件循环"><a href="#三、事件循环" class="headerlink" title="三、事件循环"></a>三、事件循环</h4><p>我们首先看事件循环的步骤，再添加例子讲解：</p>
 <hr>
 <h5 id="事件循环步骤"><a href="#事件循环步骤" class="headerlink" title="事件循环步骤"></a>事件循环步骤</h5><p>1.从选中的任务队列里选出最先放进去的任务，如果任务为空，跳到执行微任务的步骤；</p>
@@ -432,7 +436,8 @@
 <li>执行到最后一句输出3；</li>
 </ul>
 <p>所以最后输出到顺序是4 3 1 2。</p>
-<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>执行完一个宏任务，会立即执行这个宏任务里产生的微任务，才会开始下一个宏任务。</p>
+<p><strong>执行完一个宏任务，会立即执行这个宏任务里产生的微任务，才会开始下一个宏任务。</strong></p>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>​    事件循环看似跟平时工作无关，但是知道自己代码怎么执行，才能更为准确的用代码表达自己的意图。</p>
 
       
     </div>
