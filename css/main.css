@@ -1091,8 +1091,7 @@ pre .javascript .function {
 }
 .header {
   background: transparent;
-  background-image: url("http://ww1.sinaimg.cn/large/005AkzRvly1g1f8kq8k4rj33uw2klb2g.jpg");
-  background-position: -11px -725px;
+  background-image: url("http://ww1.sinaimg.cn/large/005AkzRvly1g1f8wjn0vnj33uw2klb2m.jpg");
 }
 .header-inner {
   position: relative;
@@ -1825,7 +1824,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff;
+  background: #ff5922;
 }
 .links-of-blogroll {
   font-size: 13px;
