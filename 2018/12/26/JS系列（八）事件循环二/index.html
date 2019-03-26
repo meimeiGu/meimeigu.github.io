@@ -114,7 +114,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1d4cwnddyj30k00gzgun.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/005AkzRvly1g1f02uf540j30gp0endg6.jpg">
-<meta property="og:updated_time" content="2019-03-25T06:26:09.530Z">
+<meta property="og:updated_time" content="2019-03-26T11:37:37.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS系列（八）事件循环二">
 <meta name="twitter:description" content="终于写完了">
@@ -405,7 +405,7 @@
 <h5 id="事件循环例子"><a href="#事件循环例子" class="headerlink" title="事件循环例子"></a>事件循环例子</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
 <p>可以先在看解析前自己测试下输出顺序。</p>
 <ul>
-<li>首先，全局代码开始执行，当前任务队列为空，全局代码为宏任务开始执行；</li>
+<li>首先，全局代码开始执行，当前任务队列为空，<strong>全局代码为宏任务开始执行</strong>；</li>
 <li>执行第一行输出，执行第二行，产生了一个宏任务，放入setTimeout为任务源的任务队列A里；</li>
 <li>执行到第5行，产生了同一个源的宏任务，放入到A任务队列里；</li>
 <li>执行到8行，产生了一个setImmediate的宏任务，放入setImmediate为任务源的任务队列B里；</li>
