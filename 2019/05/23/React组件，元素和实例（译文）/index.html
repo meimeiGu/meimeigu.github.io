@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="组件、实例和元素的不同让很多React新手感到迷惑，为什么会有三个不同的术语来指代在屏幕上绘制的东西。 原文：https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html ##管理实例 如果你刚接触React,你可能之前只接触过组件类和实例。例如，你可能创造一个类来定义一个Button组件。当程序在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="草丛小精灵">
+<meta property="og:url" content="http://yoursite.com/2019/05/23/React组件，元素和实例（译文）/index.html">
+<meta property="og:site_name" content="草丛小精灵">
+<meta property="og:description" content="组件、实例和元素的不同让很多React新手感到迷惑，为什么会有三个不同的术语来指代在屏幕上绘制的东西。 原文：https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html ##管理实例 如果你刚接触React,你可能之前只接触过组件类和实例。例如，你可能创造一个类来定义一个Button组件。当程序在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-23T06:15:35.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="草丛小精灵">
+<meta name="twitter:description" content="组件、实例和元素的不同让很多React新手感到迷惑，为什么会有三个不同的术语来指代在屏幕上绘制的东西。 原文：https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html ##管理实例 如果你刚接触React,你可能之前只接触过组件类和实例。例如，你可能创造一个类来定义一个Button组件。当程序在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'wangmm'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/23/React组件，元素和实例（译文）/"/>
+
+
+
+
+
+  <title> | 草丛小精灵</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">草丛小精灵</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/React组件，元素和实例（译文）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="草丛小精灵">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/cat.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="草丛小精灵">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T09:14:56+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/React组件，元素和实例（译文）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/23/React组件，元素和实例（译文）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/05/23/React组件，元素和实例（译文）/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>组件、实例和元素的不同让很多React新手感到迷惑，为什么会有三个不同的术语来指代在屏幕上绘制的东西。</p>
+<p>原文：<a href="https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html" target="_blank" rel="noopener">https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html</a></p>
+<p>##管理实例</p>
+<p>如果你刚接触React,你可能之前只接触过组件类和实例。例如，你可能创造一个类来定义一个<code>Button</code>组件。当程序在运行的时候，你可能在屏幕上有多个此组件实例，每个实例都有自己的属性和状态。这是传统的面向对象的UI编程。为什么要介绍元素？</p>
+<p>在传统的UI模型中，由你来负责创造或销毁子组件实例。如果一个<code>Form</code>组件渲染一个<code>Button</code>组件，它需要创造<code>Button</code>的实例，并手动使其与新信息保持同步。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Form</span> <span class="keyword">extends</span> <span class="title">TraditionalObjectOrientedView</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="comment">// 读取传进视图的数据</span></span><br><span class="line">    <span class="keyword">const</span> &#123; isSubmitted, buttonText &#125; = <span class="keyword">this</span>.attrs;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!isSubmitted &amp;&amp; !<span class="keyword">this</span>.button) &#123;</span><br><span class="line">      <span class="comment">// Form还没有提交，创建Button!</span></span><br><span class="line">      <span class="keyword">this</span>.button = <span class="keyword">new</span> Button(&#123;</span><br><span class="line">        children: buttonText,</span><br><span class="line">        color: <span class="string">'blue'</span></span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">this</span>.el.appendChild(<span class="keyword">this</span>.button.el);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.button) &#123;</span><br><span class="line">      <span class="comment">// Button已经存在，更新text</span></span><br><span class="line">      <span class="keyword">this</span>.button.attrs.children = buttonText;</span><br><span class="line">      <span class="keyword">this</span>.button.render();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isSubmitted &amp;&amp; <span class="keyword">this</span>.button) &#123;</span><br><span class="line">      <span class="comment">// Form已经提交，销毁按钮</span></span><br><span class="line">      <span class="keyword">this</span>.el.removeChild(<span class="keyword">this</span>.button.el);</span><br><span class="line">      <span class="keyword">this</span>.button.destroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isSubmitted &amp;&amp; !<span class="keyword">this</span>.message) &#123;</span><br><span class="line">      <span class="comment">// Form已经提交，展现成功信息</span></span><br><span class="line">      <span class="keyword">this</span>.message = <span class="keyword">new</span> Message(&#123; <span class="attr">text</span>: <span class="string">'Success!'</span> &#125;);</span><br><span class="line">      <span class="keyword">this</span>.el.appendChild(<span class="keyword">this</span>.message.el);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是伪代码，但是当你像用backbone这样的库用面向对象的方式写复合UI代码时，它或多或少是你最终的结果。</p>
+<p>每个组件实例都必须保持对其DOM节点和子组件实例的引用，在合适的时机创建、更新和销毁它们。代码行的增长为组件可能状态数的平方，父代可以直接访问子组件实例，这使得将来很难将它们分离。</p>
+<p>那么React不同在哪儿呢？</p>
+<p>##元素描述树</p>
+<p>在React中，这是elements要解决的地方。<strong>元素是用来描述组件实例或者DOM节点和它需要的属性的一个扁平对象。</strong> 它只包含了有关组件的类型（例如，Button）,它的属性（例如，颜色）和在组件里面的任何子元素。</p>
+<p>元素并不是真实的实例。相反，它是一种告诉React你想在屏幕上看见什么的方法。你不能在元属上调用任何方法。它只是一个带有两个字段的不可变的描述对象：<code>type:(string | ReactClass)</code>和<code>props:Object</code>.</p>
+<h3 id="DOM元素"><a href="#DOM元素" class="headerlink" title="DOM元素"></a>DOM元素</h3><p>当一个元素的type是一个字符串，他表示这是一个DOM节点的标签名，props里合并了节点的属性。这是React将呈现的内容，例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: <span class="string">'button'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    className: <span class="string">'button button-blue'</span>,</span><br><span class="line">    children: &#123;</span><br><span class="line">      type: <span class="string">'b'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: <span class="string">'OK!'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此元素只是将下面HTML表示为普通对象的一种方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">'button button-blue'</span>&gt;</span><br><span class="line">  &lt;b&gt;</span><br><span class="line">    OK!</span><br><span class="line">  &lt;<span class="regexp">/b&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>button&gt;</span><br></pre></td></tr></table></figure>
+<p>注意元素如何嵌套。按照惯例，当我们想创建一颗元素树，我们将一个或多个子元素指定为包裹它们元素的children属性。</p>
+<p>重要的是子元素和父元素都只是描述而不是真实的实例。当你创建它们，它们不会引用屏幕上任何东西。你可以创建它们并将它们销毁，这不重要。</p>
+<p>React元素很容易遍历，不需要解析，当然也比实际的DOM元素轻量级的多——它们只是对象！</p>
+<h3 id="组件元素"><a href="#组件元素" class="headerlink" title="组件元素"></a>组件元素</h3><p>但是，元素的类型也可以是React组件对应的函数或者类：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: Button,</span><br><span class="line">  props: &#123;</span><br><span class="line">    color: <span class="string">'blue'</span>,</span><br><span class="line">    children: <span class="string">'OK!'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是React的核心理念。</p>
+<p><strong>一个描述组件的元素也是一个元素，就像一个描述DOM节点的元素。它们可以嵌套并相互混合。</strong></p>
+<p>这个特征可以让你将<code>DangerButtonn</code>组件定义为一个具有特殊<code>color</code>属性值的Button，你无需担心Btton是否会呈现为DOM的<button>,为一个<div>,或者其他完全不同的东西：</div></button></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> DangerButton = <span class="function">(<span class="params">&#123; children &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  type: Button,</span><br><span class="line">  props: &#123;</span><br><span class="line">    color: <span class="string">'red'</span>,</span><br><span class="line">    children: children</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>你可以在单个元素树里混合和匹配DOM元素和组件元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> DeleteAccount = <span class="function"><span class="params">()</span> =&gt;</span> (&#123;</span><br><span class="line">  type: <span class="string">'div'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    children: [&#123;</span><br><span class="line">      type: <span class="string">'p'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: <span class="string">'Are you sure?'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      type: DangerButton,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: <span class="string">'Yep'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      type: Button,</span><br><span class="line">      props: &#123;</span><br><span class="line">        color: <span class="string">'blue'</span>,</span><br><span class="line">        children: <span class="string">'Cancel'</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>或者，如果你更喜欢JSX:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> DeleteAccount = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;p&gt;Are you sure?&lt;/p&gt;</span><br><span class="line">    &lt;DangerButton&gt;Yep&lt;<span class="regexp">/DangerButton&gt;</span></span><br><span class="line"><span class="regexp">    &lt;Button color='blue'&gt;Cancel&lt;/</span>Button&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<p>这种混合和匹配的方式有助于组件之间的分离，因为它们可以通过组合来表达is-a和has-a关系：</p>
+<ul>
+<li>Button是一个具有特定属性的DOM的<button></button></li>
+<li>DangerButton是一个具有特定属性的Butto</li>
+<li>DeleteAccount在<div>里包含了一个Button和一个DanngerButton</div></li>
+</ul>
+<h3 id="组件封装元素树"><a href="#组件封装元素树" class="headerlink" title="组件封装元素树"></a>组件封装元素树</h3><p>当React发现一个元素是函数或者类的类型，在给定相关的props时，它会向该组件询问应该呈现出什么元素。</p>
+<p>当它看见下面元素时：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: Button,</span><br><span class="line">  props: &#123;</span><br><span class="line">    color: <span class="string">'blue'</span>,</span><br><span class="line">    children: <span class="string">'OK!'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React会询问Button组件，它应该呈现什么，Button组件会返回以下元素：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: <span class="string">'button'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    className: <span class="string">'button button-blue'</span>,</span><br><span class="line">    children: &#123;</span><br><span class="line">      type: <span class="string">'b'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: <span class="string">'OK!'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React会重复这个过程，直到它知道页面上每个组件底层的DOM元素。</p>
+<p>React会像一个孩子,问你每个“X是Y”的“Y是什么”，你向他们解释，直到他们知道世界上的每一件小事。</p>
+<p>还记得上文的Form例子吗？它可以被改写成以下React:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Form = <span class="function">(<span class="params">&#123; isSubmitted, buttonText &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (isSubmitted) &#123;</span><br><span class="line">    <span class="comment">// Form提交，返回一个Message元素</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: Message,</span><br><span class="line">      props: &#123;</span><br><span class="line">        text: <span class="string">'Success!'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Form还存在，返回一个按钮</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    type: Button,</span><br><span class="line">    props: &#123;</span><br><span class="line">      children: buttonText,</span><br><span class="line">      color: <span class="string">'blue'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>就这样！对于一个React组件，props就是输入，元素树就是输出。</p>
+<p><strong>返回的元素树可以包含描述DOM节点的元素和描述其他组件的元素。这可以让你在不依赖其内部DOM结构的情况下编写UI的独立部分。</strong></p>
+<p>我们让React创建、更新和销毁实例。我们通过组件返回的元素描述它们，React负责管理实例。</p>
+<h3 id="组件可以是类或函数"><a href="#组件可以是类或函数" class="headerlink" title="组件可以是类或函数"></a>组件可以是类或函数</h3><p>在上面代码里，Form，Message和Button都是React组件。它们也可以编写为函数，也可以编写为<code>React.Component</code>类。这三种声明组件的方式大多数是等价的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1) 作为方法</span></span><br><span class="line"><span class="keyword">const</span> Button = <span class="function">(<span class="params">&#123; children, color &#125;</span>) =&gt;</span> (&#123;</span><br><span class="line">  type: <span class="string">'button'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    className: <span class="string">'button button-'</span> + color,</span><br><span class="line">    children: &#123;</span><br><span class="line">      type: <span class="string">'b'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: children</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2) 用React.createClass() 工厂</span></span><br><span class="line"><span class="keyword">const</span> Button = React.createClass(&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; children, color &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'button'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        className: <span class="string">'button button-'</span> + color,</span><br><span class="line">        children: &#123;</span><br><span class="line">          type: <span class="string">'b'</span>,</span><br><span class="line">          props: &#123;</span><br><span class="line">            children: children</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3) 来着React.Component的Es6类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Button</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; children, color &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'button'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        className: <span class="string">'button button-'</span> + color,</span><br><span class="line">        children: &#123;</span><br><span class="line">          type: <span class="string">'b'</span>,</span><br><span class="line">          props: &#123;</span><br><span class="line">            children: children</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当组件定义为类时，它比函数组件更强大。它可以存储一些自身状态，当创建或销毁对应的DOM节点时执行自定义逻辑。</p>
+<p>函数式组件功能较弱但更简单，就像类组件里只有一个<code>render()</code>方法。除非你需要的功能只有类可以提供，否则我们建议你用函数式组件。</p>
+<p>然而，无论是函数式或者类，从根本上说它们都是React的组件。它们接受props为它们的输入，并将元素作为输出返回。</p>
+<h3 id="自上而下的调节"><a href="#自上而下的调节" class="headerlink" title="自上而下的调节"></a>自上而下的调节</h3><p>当你调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&#123;</span><br><span class="line">  type: Form,</span><br><span class="line">  props: &#123;</span><br><span class="line">    isSubmitted: <span class="literal">false</span>,</span><br><span class="line">    buttonText: <span class="string">'OK!'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
+<p>React会传递Form组件props，询问它返回哪个元素树。它会根据最简单的原语逐渐“完善”对组件树的理解。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// React: You told me this...</span></span><br><span class="line">&#123;</span><br><span class="line">  type: Form,</span><br><span class="line">  props: &#123;</span><br><span class="line">    isSubmitted: <span class="literal">false</span>,</span><br><span class="line">    buttonText: <span class="string">'OK!'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// React: ...And Form told me this...</span></span><br><span class="line">&#123;</span><br><span class="line">  type: Button,</span><br><span class="line">  props: &#123;</span><br><span class="line">    children: <span class="string">'OK!'</span>,</span><br><span class="line">    color: <span class="string">'blue'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// React: ...and Button told me this! I guess I'm done.</span></span><br><span class="line">&#123;</span><br><span class="line">  type: <span class="string">'button'</span>,</span><br><span class="line">  props: &#123;</span><br><span class="line">    className: <span class="string">'button button-blue'</span>,</span><br><span class="line">    children: &#123;</span><br><span class="line">      type: <span class="string">'b'</span>,</span><br><span class="line">      props: &#123;</span><br><span class="line">        children: <span class="string">'OK!'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是调用<code>reconciliation</code>过程中的一部分，当你调用<code>ReactDOM.render()</code>或者<code>setState()</code>时启动。在协调结束的时候，React知道DOM树的结果，像react-dom或者react-native这样的渲染器应用会更新DOM节点所需的最小变更集（或者React Native的特定于平台的视图）</p>
+<p>这种渐进的精炼过程也是React应用程序易于优化的原因。如果你的组件树有些部分变得太大导致React无法有效访问，你可以在相关props没有改变的情况下，区分树的某些部分，告诉React跳过这个“refining”。如果它们是不可变的，不管props是否改变计算都是非常快的，所以Reac和immutability可以很好地协同工作，并且可以用最小的付出提供最大的优化。</p>
+<p>你可能注意到这篇博客讨论了很多关于组件和元素的内容，而对于实例不是很多。事实上，实例在React中的重要性远远低于大多数面向对象的框架。</p>
+<p>只有组件定义为类拥有实例，并且你永远不能直接创建它们：React替你做了这些。虽然存在父组件实例访问子组件实例的机制，它们仅用于强制性操作（例如设置输入框焦点），并且通常应该避免。</p>
+<p>React负责为每个类组件创建实例，所以你可以使用方法或者本地状态用面向对象的方式编写组件，但除此之外，实例在React编程模型中并不重要，并且由React自身管理。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>元素是一个普通对象，用来描述你希望在DOM节点或者其他组件方面在屏幕上显示的内容。元素可以在他们的props里包含其他元素。创造一个元素是很容易的，一旦元素创建了，它永远不会发生突变。</p>
+<p>一个组件可以被几种不同的方式声明。它可以是一个类，有render()方法。或者，在简单的情况下，它可以被定义为一个函数。在任一情况下，组件获取props为输入，返回元素树作为其输出。</p>
+<p>当一个组件接受一些参数作为输入，这是因为一个特定的父组件返回了一个有类型和这些参数的元素。这就是人们说props在React中流动的原因：从父组件到子组件。</p>
+<p>实例就是你在编写组件类中所指的实例。它对于存储本地状态和执行生命周期事件非常有用。</p>
+<p>函数式组件根本没有实例。类组件拥有实例，但是你永远不需要直接创建组件实例——React会负责这些。</p>
+<p>最后，创建实例，可以用<code>React.createElement(),JSX</code>或者<code>element factory helper.</code>不要在真实的代码里用扁平对象来描写元素——只需要知道它们是外壳下的扁平对象。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/21/React-antd表格编辑方案/" rel="next" title="React-antd表格编辑方案">
+                <i class="fa fa-chevron-left"></i> React-antd表格编辑方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/cat.jpeg"
+                alt="草丛小精灵" />
+            
+              <p class="site-author-name" itemprop="name">草丛小精灵</p>
+              <p class="site-description motion-element" itemprop="description">我只是一只可爱的小猫咪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/meimeiGu" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto://ermei.gu@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-globe"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM元素"><span class="nav-number">1.</span> <span class="nav-text">DOM元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件元素"><span class="nav-number">2.</span> <span class="nav-text">组件元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件封装元素树"><span class="nav-number">3.</span> <span class="nav-text">组件封装元素树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件可以是类或函数"><span class="nav-number">4.</span> <span class="nav-text">组件可以是类或函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自上而下的调节"><span class="nav-number">5.</span> <span class="nav-text">自上而下的调节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">true</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz',
+        appKey: 'wpT0IWBk3JtQvpvmgQ8sBdWO',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("0xVsr3Rg5c2IPzpHOUTsFKbF-gzGzoHsz", "wpT0IWBk3JtQvpvmgQ8sBdWO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
